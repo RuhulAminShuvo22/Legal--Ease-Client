@@ -1,6 +1,7 @@
 import Banner from "@/components/shared/Banner";
 import CTASection from "@/components/shared/CTASection";
 import FeaturesSection from "@/components/shared/FeaturesSection";
+import WhyChooseUs from "@/components/shared/WhyChooseUs";
 
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
 
       <FeaturesSection></FeaturesSection>
       <CTASection></CTASection>
+      <WhyChooseUs></WhyChooseUs>
       
     </div>
   );

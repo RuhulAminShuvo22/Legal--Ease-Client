@@ -17,8 +17,6 @@ export default function Banner() {
     });
 
     useEffect(() => {
-        const duration = 1200;
-
         const animateValue = (key, target) => {
             let start = 0;
             const step = Math.ceil(target / 60);
@@ -40,6 +38,7 @@ export default function Banner() {
 
     return (
         <section className="relative w-full overflow-hidden">
+
             {/* Background Image */}
             <div className="absolute inset-0">
                 <img
@@ -47,7 +46,12 @@ export default function Banner() {
                     alt="law background"
                     className="h-full w-full object-cover"
                 />
-                <div className="absolute inset-0 bg-[#1A120B]/70" />
+
+                {/* ✅ LIGHT + PREMIUM OVERLAY */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#1A120B]/55 via-[#2A1D14]/40 to-[#3A2A1F]/35" />
+
+                {/* warm glow layer */}
+                <div className="absolute inset-0 bg-[#CBA56A]/10" />
             </div>
 
             {/* Content */}
@@ -61,13 +65,11 @@ export default function Banner() {
                         transition={{ duration: 0.7 }}
                     >
                         <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
-                            Find the Best <span className="text-[#CBA56A]">Lawyers</span> for
-                            Your Legal Needs
+                            Find the Best <span className="text-[#CBA56A]">Lawyers</span> for Your Legal Needs
                         </h1>
 
                         <p className="mt-5 text-gray-200 text-lg">
-                            Connect with verified legal experts, book consultations, and solve
-                            your legal issues faster than ever.
+                            Connect with verified legal experts, book consultations, and solve your legal issues faster than ever.
                         </p>
 
                         {/* Buttons */}
@@ -89,8 +91,9 @@ export default function Banner() {
                         transition={{ duration: 0.7 }}
                         className="grid grid-cols-2 gap-6"
                     >
+
                         {/* Card 1 */}
-                        <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 text-center">
+                        <div className="backdrop-blur-md bg-white/15 border border-white/20 rounded-2xl p-6 text-center shadow-lg">
                             <h2 className="text-3xl font-bold text-white">
                                 {count.lawyers}+
                             </h2>
@@ -98,7 +101,7 @@ export default function Banner() {
                         </div>
 
                         {/* Card 2 */}
-                        <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 text-center">
+                        <div className="backdrop-blur-md bg-white/15 border border-white/20 rounded-2xl p-6 text-center shadow-lg">
                             <h2 className="text-3xl font-bold text-white">
                                 {count.cases}+
                             </h2>
@@ -106,12 +109,13 @@ export default function Banner() {
                         </div>
 
                         {/* Card 3 */}
-                        <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 text-center col-span-2">
+                        <div className="backdrop-blur-md bg-white/15 border border-white/20 rounded-2xl p-6 text-center col-span-2 shadow-lg">
                             <h2 className="text-3xl font-bold text-white">
                                 {count.clients}+
                             </h2>
                             <p className="text-gray-200 mt-2">Happy Clients</p>
                         </div>
+
                     </motion.div>
                 </div>
             </div>
