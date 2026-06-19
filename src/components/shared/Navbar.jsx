@@ -10,6 +10,7 @@ const navLinks = [
   { name: "Home", href: "/" },
   { name: "Browse Lawyers", href: "/browse-lawyers" },
   { name: "Admin", href: "/admin" },
+  
 ];
 
 export default function Navbar() {
@@ -66,7 +67,7 @@ export default function Navbar() {
             {/* Desktop Buttons */}
             <div className="hidden lg:flex items-center gap-6">
               <Link
-                href="/signin"
+                href="/login"
                 className="font-medium text-[#6B5B45] transition hover:text-[#C39245]"
               >
                 Sign In
@@ -128,7 +129,7 @@ export default function Navbar() {
                   {/* Mobile Buttons */}
                   <div className="mt-6 flex flex-col gap-3">
                     <Link
-                      href="/signin"
+                      href="/login"
                       className="rounded-xl border border-[#DCCFC0] px-4 py-3 text-center font-medium text-[#6B5B45]"
                     >
                       Sign In
