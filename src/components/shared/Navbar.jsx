@@ -367,7 +367,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu */}
-          <AnimatePresence>
+          {/* <AnimatePresence>
             {menuOpen && (
               <motion.div
                 initial={{
@@ -494,7 +494,7 @@ export default function Navbar() {
                 </div>
               </motion.div>
             )}
-          </AnimatePresence>
+          </AnimatePresence> */}
         </div>
       </motion.div>
     </header >
