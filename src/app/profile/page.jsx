@@ -74,31 +74,39 @@ export default function ProfilePage() {
                 {
                     method: "PUT",
                     headers: {
-                        "Content-Type":
-                            "application/json",
+                        "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(
-                        formData
-                    ),
+                    body: JSON.stringify(formData),
                 }
             );
 
-            const data =
-                await res.json();
+            const data = await res.json();
 
-            if (data.modifiedCount > 0) {
-                toast.success(
-                    "Profile Updated Successfully"
+            console.log("Update Response:", data);
+
+            if (!res.ok) {
+                throw new Error(
+                    data.message || "Update Failed"
                 );
-
-                setUser(formData);
-                setEditing(false);
             }
+
+            toast.success(
+                "Profile Updated Successfully 🎉"
+            );
+
+            setUser(formData);
+
+            // Navbar instantly update হবে
+            window.dispatchEvent(
+                new Event("user-auth-changed")
+            );
+
+            setEditing(false);
         } catch (error) {
-            console.log(error);
+            console.error(error);
 
             toast.error(
-                "Update Failed"
+                error.message || "Update Failed"
             );
         }
     };
