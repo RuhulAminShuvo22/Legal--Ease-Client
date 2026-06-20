@@ -368,15 +368,20 @@ export default function Navbar() {
         const session =
           await authClient.getSession();
 
-        if (!session?.data?.user) return;
+        if (!session?.data?.user) {
+          setUser(null);
+          return;
+        }
 
-        const currentUser = session.data.user;
+        const currentUser =
+          session.data.user;
 
         const res = await fetch(
           `http://localhost:5000/users/${currentUser.email}`
         );
 
-        const dbUser = await res.json();
+        const dbUser =
+          await res.json();
 
         setUser(dbUser);
       } catch (error) {
@@ -385,6 +390,18 @@ export default function Navbar() {
     };
 
     getUser();
+
+    window.addEventListener(
+      "user-auth-changed",
+      getUser
+    );
+
+    return () => {
+      window.removeEventListener(
+        "user-auth-changed",
+        getUser
+      );
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -639,151 +656,151 @@ export default function Navbar() {
 
             </div>
 
-            
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden text-[#6B5B45]"
-          >
-            {menuOpen ? (
-              <FaTimes size={24} />
-            ) : (
-              <FaBars size={24} />
-            )}
-          </button>
-        </div>
 
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              initial={{
-                opacity: 0,
-                height: 0,
-              }}
-              animate={{
-                opacity: 1,
-                height: "auto",
-              }}
-              exit={{
-                opacity: 0,
-                height: 0,
-              }}
-              transition={{
-                duration: 0.3,
-              }}
-              className="overflow-hidden lg:hidden"
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden text-[#6B5B45]"
             >
-              <div className="mt-5 border-t border-[#E4D8CA] pt-5">
+              {menuOpen ? (
+                <FaTimes size={24} />
+              ) : (
+                <FaBars size={24} />
+              )}
+            </button>
+          </div>
 
-                {/* Mobile Search */}
-                <div className="relative mb-5">
-                  <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#B88746]" />
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  height: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                  height: "auto",
+                }}
+                exit={{
+                  opacity: 0,
+                  height: 0,
+                }}
+                transition={{
+                  duration: 0.3,
+                }}
+                className="overflow-hidden lg:hidden"
+              >
+                <div className="mt-5 border-t border-[#E4D8CA] pt-5">
 
-                  <input
-                    type="text"
-                    placeholder="Search lawyers..."
-                    className="w-full rounded-full border border-[#DCCFC0] bg-white py-3 pl-11 pr-4 outline-none"
-                  />
-                </div>
+                  {/* Mobile Search */}
+                  <div className="relative mb-5">
+                    <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#B88746]" />
 
-                {/* Mobile Links */}
-                <nav className="flex flex-col gap-4">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      onClick={() =>
-                        setMenuOpen(false)
-                      }
-                      className="font-medium text-[#6B5B45] hover:text-[#C39245]"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
+                    <input
+                      type="text"
+                      placeholder="Search lawyers..."
+                      className="w-full rounded-full border border-[#DCCFC0] bg-white py-3 pl-11 pr-4 outline-none"
+                    />
+                  </div>
 
-                  {adminLoggedIn ? (
-                    <>
+                  {/* Mobile Links */}
+                  <nav className="flex flex-col gap-4">
+                    {navLinks.map((link) => (
                       <Link
-                        href="/admin/admin-dashboard"
+                        key={link.name}
+                        href={link.href}
                         onClick={() =>
                           setMenuOpen(false)
                         }
                         className="font-medium text-[#6B5B45] hover:text-[#C39245]"
                       >
-                        Admin Dashboard
+                        {link.name}
+                      </Link>
+                    ))}
+
+                    {adminLoggedIn ? (
+                      <>
+                        <Link
+                          href="/admin/admin-dashboard"
+                          onClick={() =>
+                            setMenuOpen(false)
+                          }
+                          className="font-medium text-[#6B5B45] hover:text-[#C39245]"
+                        >
+                          Admin Dashboard
+                        </Link>
+
+                        <button
+                          onClick={handleAdminLogout}
+                          className="text-left font-medium text-red-600"
+                        >
+                          Logout
+                        </button>
+                      </>
+                    ) : (
+                      <Link
+                        href="/admin"
+                        onClick={() =>
+                          setMenuOpen(false)
+                        }
+                        className="font-medium text-[#6B5B45] hover:text-[#C39245]"
+                      >
+                        Admin
+                      </Link>
+                    )}
+                  </nav>
+
+                  {!user ? (
+                    <div className="mt-6 flex flex-col gap-3">
+                      <Link
+                        href="/login"
+                        className="rounded-xl border border-[#DCCFC0] px-4 py-3 text-center font-medium text-[#6B5B45]"
+                      >
+                        Sign In
+                      </Link>
+
+                      <Link
+                        href="/register"
+                        className="rounded-xl bg-gradient-to-r from-[#D4A95A] to-[#C39245] px-4 py-3 text-center font-semibold text-white"
+                      >
+                        Get Started
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="mt-6 flex flex-col gap-3">
+                      <Link
+                        href="/profile"
+                        className="font-medium text-[#6B5B45]"
+                      >
+                        Profile
+                      </Link>
+
+                      <Link
+                        href={
+                          user.role === "lawyer"
+                            ? "/lawyer-dashboard"
+                            : "/client-dashboard"
+                        }
+                        className="font-medium text-[#6B5B45]"
+                      >
+                        Dashboard
                       </Link>
 
                       <button
-                        onClick={handleAdminLogout}
+                        onClick={handleLogout}
                         className="text-left font-medium text-red-600"
                       >
                         Logout
                       </button>
-                    </>
-                  ) : (
-                    <Link
-                      href="/admin"
-                      onClick={() =>
-                        setMenuOpen(false)
-                      }
-                      className="font-medium text-[#6B5B45] hover:text-[#C39245]"
-                    >
-                      Admin
-                    </Link>
+                    </div>
                   )}
-                </nav>
-
-                {!user ? (
-                  <div className="mt-6 flex flex-col gap-3">
-                    <Link
-                      href="/login"
-                      className="rounded-xl border border-[#DCCFC0] px-4 py-3 text-center font-medium text-[#6B5B45]"
-                    >
-                      Sign In
-                    </Link>
-
-                    <Link
-                      href="/register"
-                      className="rounded-xl bg-gradient-to-r from-[#D4A95A] to-[#C39245] px-4 py-3 text-center font-semibold text-white"
-                    >
-                      Get Started
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="mt-6 flex flex-col gap-3">
-                    <Link
-                      href="/profile"
-                      className="font-medium text-[#6B5B45]"
-                    >
-                      Profile
-                    </Link>
-
-                    <Link
-                      href={
-                        user.role === "lawyer"
-                          ? "/lawyer-dashboard"
-                          : "/client-dashboard"
-                      }
-                      className="font-medium text-[#6B5B45]"
-                    >
-                      Dashboard
-                    </Link>
-
-                    <button
-                      onClick={handleLogout}
-                      className="text-left font-medium text-red-600"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
     </header >
   );
 }
