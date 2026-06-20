@@ -13,6 +13,7 @@ export default function AdminLoginPage() {
   });
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -21,20 +22,41 @@ export default function AdminLoginPage() {
     }));
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const adminEmail = "admin@gmail.com";
-    const adminPassword = "admin1234567";
+    setError("");
+    setLoading(true);
 
-    if (
-      formData.email === adminEmail &&
-      formData.password === adminPassword
-    ) {
-      localStorage.setItem("adminLoggedIn", "true");
-      router.push("/admin/admin-dashboard");
-    } else {
-      setError("Invalid Email or Password");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem("adminLoggedIn", "true");
+
+        // Navbar instantly update হবে
+        window.dispatchEvent(
+          new Event("admin-auth-changed")
+        );
+
+        router.push("/admin/admin-dashboard");
+      } else {
+        setError(
+          data.message || "Invalid Email or Password"
+        );
+      }
+    } catch (err) {
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,9 +68,9 @@ export default function AdminLoginPage() {
           "linear-gradient(135deg, #F8F5F0 0%, #F2EEE8 50%, #ECE7DF 100%)",
       }}
     >
-      {/* Animated Background */}
-      <div className="absolute w-96 h-96 rounded-full bg-white/40 blur-3xl -top-20 -left-20 animate-pulse"></div>
-      <div className="absolute w-96 h-96 rounded-full bg-stone-200/50 blur-3xl -bottom-20 -right-20 animate-pulse"></div>
+      {/* Background Effects */}
+      <div className="absolute w-96 h-96 rounded-full bg-white/40 blur-3xl -top-20 -left-20 animate-pulse" />
+      <div className="absolute w-96 h-96 rounded-full bg-stone-200/50 blur-3xl -bottom-20 -right-20 animate-pulse" />
 
       {/* Login Card */}
       <div className="w-full max-w-md bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 border border-white/50 animate-[fadeIn_0.8s_ease]">
@@ -72,6 +94,7 @@ export default function AdminLoginPage() {
         </p>
 
         <form onSubmit={handleLogin} className="space-y-5">
+          {/* Email */}
           <div>
             <label className="block mb-2 text-gray-700 font-medium">
               Email Address
@@ -88,6 +111,7 @@ export default function AdminLoginPage() {
             />
           </div>
 
+          {/* Password */}
           <div>
             <label className="block mb-2 text-gray-700 font-medium">
               Password
@@ -104,17 +128,20 @@ export default function AdminLoginPage() {
             />
           </div>
 
+          {/* Error */}
           {error && (
             <div className="bg-red-100 text-red-600 text-sm p-3 rounded-xl">
               {error}
             </div>
           )}
 
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-stone-800 hover:bg-stone-900 text-white font-semibold transition-all duration-300 hover:scale-[1.02]"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-stone-800 hover:bg-stone-900 text-white font-semibold transition-all duration-300 hover:scale-[1.02] disabled:opacity-70"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
