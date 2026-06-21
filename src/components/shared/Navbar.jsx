@@ -21,7 +21,7 @@ const navLinks = [
   },
   {
     name: "Browse Lawyers",
-    href: "/browse-lawyers",
+    href: "/lawyers",
   },
 ];
 
