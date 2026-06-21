@@ -45,13 +45,17 @@ const ManageLegalProfile = () => {
         const form = e.target;
 
         const lawyerData = {
-            lawyerEmail: user?.email,
-            lawyerName: form.lawyerName.value,
+            name: form.name.value,
+            email: user?.email,
+            phone: form.phone.value,
+            photo: form.photo.value,
             specialization: form.specialization.value,
+            experience: Number(form.experience.value),
+            location: form.location.value,
             fee: Number(form.fee.value),
-            bio: form.bio.value,
-            image: form.image.value,
+            rating: Number(form.rating.value),
             status: form.status.value,
+            about: form.about.value,
         };
 
         try {
@@ -121,9 +125,27 @@ const ManageLegalProfile = () => {
             >
                 <input
                     type="text"
-                    name="lawyerName"
-                    defaultValue={profile?.lawyerName || ""}
-                    placeholder="Lawyer Name"
+                    name="name"
+                    defaultValue={profile?.name || ""}
+                    placeholder="Full Name"
+                    className="input input-bordered w-full"
+                    required
+                />
+
+                <input
+                    type="text"
+                    name="phone"
+                    defaultValue={profile?.phone || ""}
+                    placeholder="Phone Number"
+                    className="input input-bordered w-full"
+                    required
+                />
+
+                <input
+                    type="text"
+                    name="photo"
+                    defaultValue={profile?.photo || ""}
+                    placeholder="Photo URL"
                     className="input input-bordered w-full"
                     required
                 />
@@ -151,6 +173,24 @@ const ManageLegalProfile = () => {
 
                 <input
                     type="number"
+                    name="experience"
+                    defaultValue={profile?.experience || ""}
+                    placeholder="Years of Experience"
+                    className="input input-bordered w-full"
+                    required
+                />
+
+                <input
+                    type="text"
+                    name="location"
+                    defaultValue={profile?.location || ""}
+                    placeholder="Location"
+                    className="input input-bordered w-full"
+                    required
+                />
+
+                <input
+                    type="number"
                     name="fee"
                     defaultValue={profile?.fee || ""}
                     placeholder="Consultation Fee"
@@ -159,10 +199,13 @@ const ManageLegalProfile = () => {
                 />
 
                 <input
-                    type="text"
-                    name="image"
-                    defaultValue={profile?.image || ""}
-                    placeholder="Image URL"
+                    type="number"
+                    step="0.1"
+                    min="1"
+                    max="5"
+                    name="rating"
+                    defaultValue={profile?.rating || ""}
+                    placeholder="Rating"
                     className="input input-bordered w-full"
                     required
                 />
@@ -184,9 +227,9 @@ const ManageLegalProfile = () => {
                 />
 
                 <textarea
-                    name="bio"
-                    defaultValue={profile?.bio || ""}
-                    placeholder="Professional Summary"
+                    name="about"
+                    defaultValue={profile?.about || ""}
+                    placeholder="About Yourself"
                     className="textarea textarea-bordered md:col-span-2"
                     rows={5}
                     required
@@ -206,5 +249,4 @@ const ManageLegalProfile = () => {
 };
 
 export default ManageLegalProfile;
-
 
