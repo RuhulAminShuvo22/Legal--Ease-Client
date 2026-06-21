@@ -29,34 +29,8 @@ export default function Navbar() {
   const router = useRouter();
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
-  const [adminMenuOpen, setAdminMenuOpen] = useState(false);
-
   const [user, setUser] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const checkAdminStatus = () => {
-      const isAdmin =
-        localStorage.getItem("adminLoggedIn") === "true";
-
-      setAdminLoggedIn(isAdmin);
-    };
-
-    checkAdminStatus();
-
-    window.addEventListener(
-      "admin-auth-changed",
-      checkAdminStatus
-    );
-
-    return () => {
-      window.removeEventListener(
-        "admin-auth-changed",
-        checkAdminStatus
-      );
-    };
-  }, []);
 
   useEffect(() => {
     const getUser = async () => {
@@ -108,18 +82,18 @@ export default function Navbar() {
     router.push("/");
   };
 
-  const handleAdminLogout = () => {
-    localStorage.removeItem("adminLoggedIn");
+  // const handleAdminLogout = () => {
+  //   localStorage.removeItem("adminLoggedIn");
 
-    setAdminLoggedIn(false);
-    setAdminMenuOpen(false);
+  //   setAdminLoggedIn(false);
+  //   setAdminMenuOpen(false);
 
-    window.dispatchEvent(
-      new Event("admin-auth-changed")
-    );
+  //   window.dispatchEvent(
+  //     new Event("admin-auth-changed")
+  //   );
 
-    router.push("/");
-  };
+  //   router.push("/");
+  // };
   return (
     <header className="sticky top-0 z-50 bg-[#F8F5F0] py-4">
       <motion.div
@@ -166,61 +140,7 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              {/* Admin Menu */}
-              {adminLoggedIn ? (
-                <div className="relative">
-                  <button
-                    onClick={() =>
-                      setAdminMenuOpen(!adminMenuOpen)
-                    }
-                    className="flex items-center gap-2 font-medium text-[#6B5B45] hover:text-[#C39245]"
-                  >
-                    Admin
-                    <FaChevronDown size={12} />
-                  </button>
 
-                  <AnimatePresence>
-                    {adminMenuOpen && (
-                      <motion.div
-                        initial={{
-                          opacity: 0,
-                          y: 10,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                        }}
-                        exit={{
-                          opacity: 0,
-                          y: 10,
-                        }}
-                        className="absolute right-0 mt-3 w-56 overflow-hidden rounded-2xl border border-[#DCCFC0] bg-white shadow-xl"
-                      >
-                        <Link
-                          href="/admin/admin-dashboard"
-                          className="block px-5 py-3 text-[#6B5B45] hover:bg-[#F8F5F0]"
-                        >
-                          Admin Dashboard
-                        </Link>
-
-                        <button
-                          onClick={handleAdminLogout}
-                          className="w-full text-left px-5 py-3 text-red-600 hover:bg-red-50"
-                        >
-                          Logout
-                        </button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ) : (
-                <Link
-                  href="/admin"
-                  className="font-medium text-[#6B5B45] transition-all duration-300 hover:text-[#C39245]"
-                >
-                  Admin
-                </Link>
-              )}
             </nav>
             {/* Search */}
             <div className="hidden lg:block">
@@ -313,9 +233,11 @@ export default function Navbar() {
 
                         <Link
                           href={
-                            user.role === "lawyer"
-                              ? "/lawyer-dashboard"
-                              : "/client-dashboard"
+                            user.role === "admin"
+                              ? "/admin-dashboard"
+                              : user.role === "lawyer"
+                                ? "/lawyer-dashboard"
+                                : "/client-dashboard"
                           }
                           className="block px-5 py-3 hover:bg-gray-50"
                         >
@@ -415,36 +337,7 @@ export default function Navbar() {
                       </Link>
                     ))}
 
-                    {adminLoggedIn ? (
-                      <>
-                        <Link
-                          href="/admin/admin-dashboard"
-                          onClick={() =>
-                            setMenuOpen(false)
-                          }
-                          className="font-medium text-[#6B5B45] hover:text-[#C39245]"
-                        >
-                          Admin Dashboard
-                        </Link>
 
-                        <button
-                          onClick={handleAdminLogout}
-                          className="text-left font-medium text-red-600"
-                        >
-                          Logout
-                        </button>
-                      </>
-                    ) : (
-                      <Link
-                        href="/admin"
-                        onClick={() =>
-                          setMenuOpen(false)
-                        }
-                        className="font-medium text-[#6B5B45] hover:text-[#C39245]"
-                      >
-                        Admin
-                      </Link>
-                    )}
                   </nav>
 
                   {!user ? (
@@ -474,9 +367,11 @@ export default function Navbar() {
 
                       <Link
                         href={
-                          user.role === "lawyer"
-                            ? "/lawyer-dashboard"
-                            : "/client-dashboard"
+                          user.role === "admin"
+                            ? "/admin-dashboard"
+                            : user.role === "lawyer"
+                              ? "/lawyer-dashboard"
+                              : "/client-dashboard"
                         }
                         className="font-medium text-[#6B5B45]"
                       >
