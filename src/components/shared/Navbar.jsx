@@ -232,14 +232,8 @@ export default function Navbar() {
                         </Link>
 
                         <Link
-                          href={
-                            user.role === "admin"
-                              ? "/admin-dashboard"
-                              : user.role === "lawyer"
-                                ? "/lawyer-dashboard"
-                                : "/client-dashboard"
-                          }
-                          className="block px-5 py-3 hover:bg-gray-50"
+                          href="/dashboard"
+                          className="block px-5 py-3 hover:bg-gray-50 text-[#6B5B45]"
                         >
                           Dashboard
                         </Link>
@@ -366,13 +360,7 @@ export default function Navbar() {
                       </Link>
 
                       <Link
-                        href={
-                          user.role === "admin"
-                            ? "/admin-dashboard"
-                            : user.role === "lawyer"
-                              ? "/lawyer-dashboard"
-                              : "/client-dashboard"
-                        }
+                        href="/dashboard"
                         className="font-medium text-[#6B5B45]"
                       >
                         Dashboard
