@@ -1,321 +1,322 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import {
-    Search,
-    MapPin,
-    Briefcase,
-    Filter,
-} from "lucide-react";
+
+import SearchBar from "@/components/lawyers/SearchBar";
+import LawyerFilter from "@/components/lawyers/LawyerFilter";
+import LawyerCard from "@/components/lawyers/LawyerCard";
+import LawyerSkeleton from "@/components/lawyers/LawyerSkeleton";
 
 export default function BrowseLawyersPage() {
     const [lawyers, setLawyers] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const [search, setSearch] = useState("");
-    const [specialization, setSpecialization] =
-        useState("");
-    const [availability, setAvailability] =
-        useState("");
+    const [specialization, setSpecialization] = useState("");
+    const [availability, setAvailability] = useState("");
+    const [sort, setSort] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:5000/lawyers")
-            .then((res) => res.json())
-            .then((data) => {
+        const fetchLawyers = async () => {
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/lawyers"
+                );
+
+                const data = await res.json();
+
                 setLawyers(data);
+            } catch (error) {
+                console.error(
+                    "Failed to fetch lawyers:",
+                    error
+                );
+            } finally {
                 setLoading(false);
-            })
-            .catch(() => setLoading(false));
+            }
+        };
+
+        fetchLawyers();
     }, []);
 
-    const filteredLawyers = lawyers.filter(
-        (lawyer) => {
-            const matchSearch =
-                lawyer.name
-                    ?.toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                lawyer.specialization
-                    ?.toLowerCase()
-                    .includes(search.toLowerCase());
+    const filteredLawyers = useMemo(() => {
+        let result = [...lawyers];
 
-
-            const matchCategory =
-                specialization
-                    ? lawyer.specialization ===
-                    specialization
-                    : true;
-
-            const matchAvailability =
-                availability
-                    ? lawyer.status === availability
-                    : true;
-
-            return (
-                matchSearch &&
-                matchCategory &&
-                matchAvailability
+        // Search
+        if (search) {
+            result = result.filter(
+                (lawyer) =>
+                    lawyer.name
+                        ?.toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                    lawyer.specialization
+                        ?.toLowerCase()
+                        .includes(search.toLowerCase())
             );
         }
 
+        // Category
+        if (specialization) {
+            result = result.filter(
+                (lawyer) =>
+                    lawyer.specialization ===
+                    specialization
+            );
+        }
 
-    );
+        // Availability
+        if (availability) {
+            result = result.filter(
+                (lawyer) =>
+                    lawyer.status === availability
+            );
+        }
 
-    return (<div className="min-h-screen bg-[#F7F3EE]">
+        // Sort
+        if (sort === "rating") {
+            result.sort(
+                (a, b) => b.rating - a.rating
+            );
+        }
 
+        if (sort === "feeLow") {
+            result.sort(
+                (a, b) => a.fee - b.fee
+            );
+        }
 
-        {/* Hero */}
-        <section className="relative overflow-hidden">
+        if (sort === "feeHigh") {
+            result.sort(
+                (a, b) => b.fee - a.fee
+            );
+        }
 
-            <div className="absolute w-[350px] h-[350px] rounded-full bg-[#D4A95A]/20 blur-[120px] -top-20 -left-20" />
+        if (sort === "experience") {
+            result.sort(
+                (a, b) =>
+                    b.experience - a.experience
+            );
+        }
 
-            <div className="absolute w-[300px] h-[300px] rounded-full bg-[#B88A44]/20 blur-[120px] bottom-0 right-0" />
+        return result;
+    }, [
+        lawyers,
+        search,
+        specialization,
+        availability,
+        sort,
+    ]);
 
-            <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
+    return (
+        <div className="min-h-screen bg-[#F7F3EE]">
 
-                <motion.h1
-                    initial={{
-                        opacity: 0,
-                        y: 40,
-                    }}
-                    animate={{
-                        opacity: 1,
-                        y: 0,
-                    }}
-                    transition={{
-                        duration: .6,
-                    }}
-                    className="text-5xl md:text-6xl font-bold text-center text-[#1E1E1E]"
-                >
-                    Browse{" "}
-                    <span className="text-[#D4A95A]">
-                        Lawyers
-                    </span>
-                </motion.h1>
+            {/* Hero Section */}
 
-                <motion.p
-                    initial={{
-                        opacity: 0,
-                    }}
-                    animate={{
-                        opacity: 1,
-                    }}
-                    transition={{
-                        delay: .3,
-                    }}
-                    className="text-center text-gray-600 mt-5 max-w-2xl mx-auto"
-                >
-                    Find experienced lawyers based on
-                    specialization, location and
-                    availability.
-                </motion.p>
+            <section className="relative overflow-hidden">
 
-            </div>
+                <div className="absolute w-[350px] h-[350px] rounded-full bg-[#D4A95A]/20 blur-[120px] -top-20 -left-20" />
 
-        </section>
+                <div className="absolute w-[300px] h-[300px] rounded-full bg-[#B88A44]/20 blur-[120px] bottom-0 right-0" />
 
-        {/* Search */}
-        <section className="max-w-7xl mx-auto px-6">
+                <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
 
-            <div className="bg-white border border-[#E8DDCF] rounded-3xl p-6 shadow-sm">
+                    <motion.h1
+                        initial={{
+                            opacity: 0,
+                            y: 40,
+                        }}
+                        animate={{
+                            opacity: 1,
+                            y: 0,
+                        }}
+                        transition={{
+                            duration: 0.6,
+                        }}
+                        className="text-5xl md:text-6xl font-bold text-center text-[#1E1E1E]"
+                    >
+                        Browse{" "}
+                        <span className="text-[#D4A95A]">
+                            Lawyers
+                        </span>
+                    </motion.h1>
 
-                <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5">
+                    <motion.p
+                        initial={{
+                            opacity: 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                        }}
+                        transition={{
+                            delay: 0.2,
+                        }}
+                        className="text-center text-[#6B7280] mt-5 max-w-2xl mx-auto"
+                    >
+                        Find experienced legal
+                        professionals based on
+                        specialization, location and
+                        availability.
+                    </motion.p>
 
-                    <div className="relative">
+                </div>
+            </section>
 
-                        <Search
-                            className="absolute left-4 top-3.5 text-gray-500"
-                            size={18}
+            {/* Search + Filter */}
+
+            <section className="max-w-7xl mx-auto px-6">
+
+                <div className="bg-white border border-[#E8DDCF] rounded-3xl p-6 shadow-sm">
+
+                    <div className="space-y-5">
+
+                        <SearchBar
+                            search={search}
+                            setSearch={setSearch}
                         />
 
-                        <input
-                            type="text"
-                            placeholder="Search Lawyer..."
-                            value={search}
-                            onChange={(e) =>
-                                setSearch(
-                                    e.target.value
-                                )
+                        <LawyerFilter
+                            specialization={
+                                specialization
                             }
-                            className="w-full bg-[#FCF8F3] border border-[#E8DDCF] rounded-xl py-3 pl-11 pr-3 text-[#1E1E1E] focus:border-[#D4A95A] outline-none"
+                            setSpecialization={
+                                setSpecialization
+                            }
+                            availability={
+                                availability
+                            }
+                            setAvailability={
+                                setAvailability
+                            }
+                            sort={sort}
+                            setSort={setSort}
                         />
 
                     </div>
 
-                    <select
-                        value={specialization}
-                        onChange={(e) =>
-                            setSpecialization(
-                                e.target.value
+                </div>
+
+            </section>
+
+            {/* Lawyers Grid */}
+
+            <section className="max-w-7xl mx-auto px-6 py-14">
+
+                {loading ? (
+                    <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
+
+                        {[...Array(8)].map(
+                            (_, index) => (
+                                <LawyerSkeleton
+                                    key={index}
+                                />
                             )
-                        }
-                        className="bg-[#FCF8F3] border border-[#E8DDCF] rounded-xl px-4 text-[#1E1E1E]"
-                    >
-                        <option value="">
-                            All Categories
-                        </option>
+                        )}
 
-                        <option>
-                            Criminal Lawyer
-                        </option>
+                    </div>
+                ) : filteredLawyers.length === 0 ? (
+                    <div className="text-center py-20">
 
-                        <option>
-                            Family Lawyer
-                        </option>
+                        <h2 className="text-3xl font-bold text-[#B88A44]">
 
-                        <option>
-                            Corporate Lawyer
-                        </option>
+                            No Lawyers Found
 
-                        <option>
-                            Business Lawyer
-                        </option>
+                        </h2>
 
-                        <option>
-                            Property Lawyer
-                        </option>
-                    </select>
+                        <p className="text-[#6B7280] mt-3">
 
-                    <select
-                        value={availability}
-                        onChange={(e) =>
-                            setAvailability(
-                                e.target.value
-                            )
-                        }
-                        className="bg-[#FCF8F3] border border-[#E8DDCF] rounded-xl px-4 text-[#1E1E1E]"
-                    >
-                        <option value="">
-                            Availability
-                        </option>
+                            Try changing your search
+                            or filters.
 
-                        <option>
-                            Available
-                        </option>
+                        </p>
 
-                        <option>
-                            Busy
-                        </option>
-                    </select>
-
-                    <button className="rounded-xl bg-[#D4A95A] hover:bg-[#B88A44] text-white font-semibold flex justify-center items-center gap-2 transition-all duration-300">
-                        <Filter size={18} />
-                        Filter
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        {/* Cards */}
-        <section className="max-w-7xl mx-auto px-6 py-14">
-
-            {loading ? (
-
-                <div className="flex justify-center py-20">
-
-                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#D4A95A] border-t-transparent"></div>
-
-                </div>
-
-            ) : filteredLawyers.length === 0 ? (
-
-                <div className="text-center text-[#B88A44] text-xl font-semibold">
-                    No Lawyers Found
-                </div>
-
-            ) : (
-
-                <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-7">
-
-                    {filteredLawyers.map(
-                        (lawyer) => (
-
+                    </div>
+                ) : (
+                    <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
+                        {filteredLawyers.map((lawyer, index) => (
                             <motion.div
                                 key={lawyer._id}
-                                whileHover={{
-                                    y: -10,
-                                    scale: 1.02,
+                                initial={{
+                                    opacity: 0,
+                                    y: 40,
+                                }}
+                                whileInView={{
+                                    opacity: 1,
+                                    y: 0,
+                                }}
+                                viewport={{
+                                    once: true,
                                 }}
                                 transition={{
-                                    duration: .3,
+                                    duration: 0.4,
+                                    delay: index * 0.08,
                                 }}
-                                className="bg-white rounded-3xl border border-[#E8DDCF] overflow-hidden shadow-sm hover:shadow-xl"
                             >
-
-                                <div className="relative">
-
-                                    <img
-                                        src={lawyer.photo}
-                                        alt={lawyer.name}
-                                        className="h-64 w-full object-cover"
-                                    />
-
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-
-                                    <span
-                                        className={`absolute top-4 right-4 text-xs px-3 py-1 rounded-full font-medium ${lawyer.status ===
-                                                "Available"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-red-100 text-red-700"
-                                            }`}
-                                    >
-                                        {lawyer.status}
-                                    </span>
-
-                                </div>
-
-                                <div className="p-5">
-
-                                    <h2 className="text-[#1E1E1E] text-xl font-bold">
-                                        {lawyer.name}
-                                    </h2>
-
-                                    <div className="flex items-center gap-2 text-gray-600 mt-3">
-                                        <Briefcase size={16} />
-                                        {
-                                            lawyer.specialization
-                                        }
-                                    </div>
-
-                                    <div className="flex items-center gap-2 text-gray-600 mt-2">
-                                        <MapPin size={16} />
-                                        {lawyer.location}
-                                    </div>
-
-                                    <div className="mt-5 flex justify-between items-center">
-
-                                        <p className="text-[#D4A95A] font-bold text-lg">
-                                            ৳ {lawyer.fee}
-                                        </p>
-
-                                        <Link
-                                            href={`/lawyers/${lawyer._id}`}
-                                            className="bg-[#D4A95A] hover:bg-[#B88A44] text-white px-4 py-2 rounded-xl font-semibold transition-all duration-300"
-                                        >
-                                            View Profile
-                                        </Link>
-
-                                    </div>
-
-                                </div>
-
+                                <LawyerCard lawyer={lawyer} />
                             </motion.div>
+                        ))}
+                    </div>
+                )}
+            </section>
 
-                        )
-                    )}
+            {/* Statistics */}
+
+            <section className="max-w-7xl mx-auto px-6 pb-20">
+
+                <div className="grid md:grid-cols-3 gap-6">
+
+                    <div className="bg-white border border-[#E8DDCF] rounded-3xl p-8 text-center shadow-sm">
+
+                        <h2 className="text-4xl font-bold text-[#D4A95A]">
+                            {lawyers.length}
+                        </h2>
+
+                        <p className="mt-3 text-[#6B7280]">
+                            Verified Lawyers
+                        </p>
+
+                    </div>
+
+                    <div className="bg-white border border-[#E8DDCF] rounded-3xl p-8 text-center shadow-sm">
+
+                        <h2 className="text-4xl font-bold text-[#D4A95A]">
+                            {
+                                lawyers.filter(
+                                    (item) =>
+                                        item.status === "Available"
+                                ).length
+                            }
+                        </h2>
+
+                        <p className="mt-3 text-[#6B7280]">
+                            Available Now
+                        </p>
+
+                    </div>
+
+                    <div className="bg-white border border-[#E8DDCF] rounded-3xl p-8 text-center shadow-sm">
+
+                        <h2 className="text-4xl font-bold text-[#D4A95A]">
+                            {
+                                new Set(
+                                    lawyers.map(
+                                        (item) =>
+                                            item.specialization
+                                    )
+                                ).size
+                            }
+                        </h2>
+
+                        <p className="mt-3 text-[#6B7280]">
+                            Practice Areas
+                        </p>
+
+                    </div>
 
                 </div>
 
-            )}
+            </section>
 
-        </section>
-
-    </div>
-
-
+        </div>
     );
 }
