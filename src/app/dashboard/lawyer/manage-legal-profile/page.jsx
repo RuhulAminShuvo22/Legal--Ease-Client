@@ -15,12 +15,12 @@ const ManageLegalProfile = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!user?.email) {
-            setLoading(false);
-            return;
-        }
-
         const fetchProfile = async () => {
+            if (!user?.email) {
+                setLoading(false);
+                return;
+            }
+
             try {
                 const res = await axios.get(
                     `http://localhost:5000/lawyers/email/${user.email}`
@@ -37,7 +37,7 @@ const ManageLegalProfile = () => {
         };
 
         fetchProfile();
-    }, [user]);
+    }, [user?.email]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -128,14 +128,26 @@ const ManageLegalProfile = () => {
                     required
                 />
 
-                <input
-                    type="text"
+                <select
                     name="specialization"
                     defaultValue={profile?.specialization || ""}
-                    placeholder="Specialization"
-                    className="input input-bordered w-full"
+                    className="select select-bordered w-full"
                     required
-                />
+                >
+                    <option value="">Select Specialization</option>
+                    <option value="Criminal Lawyer">Criminal Lawyer</option>
+                    <option value="Family Lawyer">Family Lawyer</option>
+                    <option value="Corporate Lawyer">Corporate Lawyer</option>
+                    <option value="Property Lawyer">Property Lawyer</option>
+                    <option value="Business Lawyer">Business Lawyer</option>
+                    <option value="Civil Lawyer">Civil Lawyer</option>
+                    <option value="Immigration Lawyer">Immigration Lawyer</option>
+                    <option value="Tax Lawyer">Tax Lawyer</option>
+                    <option value="Employment Lawyer">Employment Lawyer</option>
+                    <option value="Intellectual Property Lawyer">
+                        Intellectual Property Lawyer
+                    </option>
+                </select>
 
                 <input
                     type="number"
@@ -194,3 +206,5 @@ const ManageLegalProfile = () => {
 };
 
 export default ManageLegalProfile;
+
+
