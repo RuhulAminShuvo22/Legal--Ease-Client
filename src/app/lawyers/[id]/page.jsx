@@ -1,5 +1,5 @@
 "use client";
-
+import { FaGavel, FaCalendarCheck } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -93,11 +93,10 @@ const LawyerDetailsPage = () => {
                                     </h1>
 
                                     <span
-                                        className={`badge badge-lg ${
-                                            lawyer.status === "Available"
+                                        className={`badge badge-lg ${lawyer.status === "Available"
                                                 ? "badge-success"
                                                 : "badge-error"
-                                        }`}
+                                            }`}
                                     >
                                         {lawyer.status}
                                     </span>
@@ -214,14 +213,49 @@ const LawyerDetailsPage = () => {
                         </div>
 
                         {/* Buttons */}
-                        <div className="flex flex-wrap gap-4 mt-10">
+                        <div className="flex flex-wrap gap-5 mt-10">
 
-                            <button className="btn bg-[#D4A95A] hover:bg-[#B88A44] text-white border-none px-8">
-                                Hire Lawyer
+                            <button
+                                className="
+        group relative overflow-hidden
+        px-8 py-4 rounded-2xl
+        bg-gradient-to-r from-[#D4A95A] via-[#C89A48] to-[#B88A44]
+        text-white font-bold tracking-wide
+        shadow-xl
+        transition-all duration-500
+        hover:-translate-y-1 hover:scale-105
+        "
+                            >
+                                <span className="relative z-10 flex items-center gap-3">
+                                    <FaGavel />
+                                    Hire Lawyer
+                                </span>
+
+                                <div className="absolute inset-0 bg-white/20 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-1000 skew-x-12" />
                             </button>
 
-                            <button className="btn btn-outline border-[#D4A95A] text-[#B88A44]">
-                                Book Consultation
+                            <button
+                                className="
+        group
+        px-8 py-4 rounded-2xl
+        border-2 border-[#D4A95A]
+        text-[#B88A44]
+        font-bold tracking-wide
+        bg-white
+        transition-all duration-500
+        hover:bg-gradient-to-r
+        hover:from-[#D4A95A]
+        hover:to-[#B88A44]
+        hover:text-white
+        hover:border-transparent
+        hover:-translate-y-1
+        hover:shadow-xl
+        "
+                            >
+                                <span className="flex items-center gap-3">
+                                    <FaCalendarCheck />
+                                    Book Consultation
+                                </span>
                             </button>
 
                         </div>
