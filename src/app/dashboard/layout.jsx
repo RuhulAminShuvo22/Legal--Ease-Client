@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -99,17 +98,21 @@ const sidebarLinks = {
 export default function DashboardLayout({
   children,
 }) {
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] =
     useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     const getUser = async () => {
       try {
         const session =
           await authClient.getSession();
+
+        if (!mounted) return;
 
         if (!session?.data?.user) {
           setLoading(false);
@@ -123,25 +126,30 @@ export default function DashboardLayout({
         const dbUser =
           await res.json();
 
-        setUser(dbUser);
+        if (mounted) {
+          setUser(dbUser);
+        }
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     };
 
     getUser();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#FDFBF7] via-[#F8F5EF] to-[#F2EBDD]">
-
         <motion.div
-          animate={{
-            rotate: 360,
-          }}
+          animate={{ rotate: 360 }}
           transition={{
             repeat: Infinity,
             duration: 1,
@@ -159,13 +167,9 @@ export default function DashboardLayout({
   return (
     <div className="relative min-h-screen flex overflow-hidden bg-gradient-to-br from-[#FDFBF7] via-[#F8F5EF] to-[#F2EBDD]">
 
-      {/* Background Effects */}
-
       <div className="absolute top-20 right-20 w-72 h-72 bg-[#D4A95A]/10 rounded-full blur-3xl" />
 
       <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#B88A44]/10 rounded-full blur-3xl" />
-
-      {/* Sidebar */}
 
       <motion.aside
         initial={{
@@ -182,6 +186,9 @@ export default function DashboardLayout({
         className="
         w-72
         m-4
+        flex
+        flex-col
+        shrink-0
         rounded-[36px]
         bg-white/90
         backdrop-blur-xl
@@ -191,13 +198,9 @@ export default function DashboardLayout({
         overflow-hidden
         "
       >
-
-        {/* Logo */}
-
         <div className="border-b border-[#E8DDCF] p-6">
 
           <div className="flex items-center gap-3">
-
             <Image
               src="/newlogo.png"
               alt="LegalEase"
@@ -218,7 +221,6 @@ export default function DashboardLayout({
           </div>
 
           <div className="mt-5">
-
             <motion.div
               animate={{
                 width: [
@@ -236,8 +238,6 @@ export default function DashboardLayout({
           </div>
         </div>
 
-        {/* Profile Card */}
-
         {user && (
           <motion.div
             whileHover={{
@@ -253,8 +253,6 @@ export default function DashboardLayout({
             border-[#E8DDCF]
             p-5
             shadow-lg
-            transition-all
-            duration-500
             "
           >
             <div className="flex items-center gap-4">
@@ -267,16 +265,11 @@ export default function DashboardLayout({
                 alt="user"
                 width={60}
                 height={60}
-                className="
-                rounded-full
-                object-cover
-                ring-4
-                ring-[#D4A95A]/20
-                "
+                className="rounded-full object-cover ring-4 ring-[#D4A95A]/20"
               />
 
               <div>
-                <h3 className="font-semibold text-lg text-[#1E1E1E]">
+                <h3 className="font-semibold text-lg">
                   {user.name}
                 </h3>
 
@@ -287,8 +280,6 @@ export default function DashboardLayout({
             </div>
           </motion.div>
         )}
-
-        {/* Menu */}
 
         <div className="px-4 pt-2">
 
@@ -310,26 +301,19 @@ export default function DashboardLayout({
                 <motion.div
                   key={link.href}
                   whileHover={{
-                    x: 6,
-                    scale: 1.02,
+                    x: 8,
+                    scale: 1.03,
                   }}
                   whileTap={{
-                    scale: 0.98,
+                    scale: 0.97,
                   }}
                 >
                   <Link
                     href={link.href}
                     className={`
-                    group
-                    flex
-                    items-center
-                    gap-3
-                    rounded-2xl
-                    px-4
-                    py-3
-                    font-medium
-                    transition-all
-                    duration-300
+                    group flex items-center gap-3
+                    rounded-2xl px-4 py-3
+                    font-medium transition-all duration-300
 
                     ${active
                         ? `
@@ -337,7 +321,7 @@ export default function DashboardLayout({
                         from-[#D4A95A]
                         to-[#B88A44]
                         text-white
-                        shadow-[0_10px_25px_rgba(212,169,90,0.35)]
+                        shadow-[0_12px_30px_rgba(212,169,90,0.4)]
                         `
                         : `
                         text-gray-700
@@ -348,10 +332,7 @@ export default function DashboardLayout({
                   `}
                   >
                     <Icon size={20} />
-
-                    <span>
-                      {link.name}
-                    </span>
+                    <span>{link.name}</span>
                   </Link>
                 </motion.div>
               );
@@ -359,11 +340,23 @@ export default function DashboardLayout({
           </nav>
         </div>
 
-        {/* Bottom Glow */}
-
         <div className="mt-auto p-5">
-          <div className="rounded-2xl bg-gradient-to-r from-[#D4A95A]/10 to-[#B88A44]/10 p-4 text-center">
 
+          <motion.div
+            whileHover={{
+              scale: 1.03,
+            }}
+            className="
+            rounded-3xl
+            bg-gradient-to-r
+            from-[#D4A95A]/10
+            to-[#B88A44]/10
+            p-5
+            text-center
+            border
+            border-[#E8DDCF]
+            "
+          >
             <p className="text-xs text-gray-500">
               LegalEase Dashboard
             </p>
@@ -371,11 +364,10 @@ export default function DashboardLayout({
             <h4 className="mt-1 font-semibold text-[#B88A44]">
               Premium Workspace
             </h4>
-          </div>
+          </motion.div>
         </div>
-      </motion.aside>
 
-      {/* Main Content */}
+      </motion.aside>
 
       <main className="flex-1 p-4 md:p-6 overflow-auto">
 
@@ -405,14 +397,9 @@ export default function DashboardLayout({
           overflow-hidden
           "
         >
-
-          {/* Decorative Background */}
-
           <div className="absolute -top-24 -right-24 w-72 h-72 bg-[#D4A95A]/10 rounded-full blur-3xl" />
 
           <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-[#B88A44]/10 rounded-full blur-3xl" />
-
-          {/* Top Header */}
 
           <div className="relative z-10 border-b border-[#F0E6D9] px-8 py-6">
 
@@ -424,8 +411,7 @@ export default function DashboardLayout({
                 </h1>
 
                 <p className="mt-1 text-gray-500">
-                  Manage your legal
-                  workspace efficiently
+                  Manage your legal workspace efficiently
                 </p>
               </div>
 
@@ -435,16 +421,12 @@ export default function DashboardLayout({
                     scale: 1.05,
                   }}
                   className="
-                  hidden
-                  md:flex
-                  items-center
-                  gap-3
+                  hidden md:flex
+                  items-center gap-3
                   rounded-2xl
                   bg-[#FCF8F3]
-                  px-4
-                  py-2
-                  border
-                  border-[#E8DDCF]
+                  px-4 py-2
+                  border border-[#E8DDCF]
                   "
                 >
                   <Image
@@ -472,8 +454,6 @@ export default function DashboardLayout({
             </div>
           </div>
 
-          {/* Page Content */}
-
           <div className="relative z-10 p-8">
             {children}
           </div>
@@ -483,4 +463,3 @@ export default function DashboardLayout({
     </div>
   );
 }
-
