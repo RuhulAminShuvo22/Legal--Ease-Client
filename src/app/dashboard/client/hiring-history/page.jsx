@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 import {
     Clock3,
@@ -16,6 +17,7 @@ import {
 } from "lucide-react";
 
 const HiringHistoryPage = () => {
+    const router = useRouter();
     const { data: session } =
         authClient.useSession();
 
@@ -377,27 +379,32 @@ const HiringHistoryPage = () => {
                                         item.paymentStatus ===
                                         "unpaid" ? (
                                         <button
+                                            onClick={() =>
+                                                router.push(
+                                                    `/dashboard/client/payment/${item._id}`
+                                                )
+                                            }
                                             className="
-                      w-full
-                      py-4
-                      rounded-2xl
-                      bg-gradient-to-r
-                      from-[#D4A95A]
-                      to-[#B88A44]
-                      text-white
-                      font-bold
-                      flex
-                      items-center
-                      justify-center
-                      gap-3
-                      hover:scale-[1.02]
-                      transition
-                      "
+    w-full
+    py-4
+    rounded-2xl
+    bg-gradient-to-r
+    from-[#D4A95A]
+    via-[#C99A4A]
+    to-[#B88A44]
+    text-white
+    font-bold
+    flex
+    items-center
+    justify-center
+    gap-3
+    hover:scale-[1.03]
+    hover:shadow-2xl
+    transition-all
+    duration-300
+    "
                                         >
-                                            <CreditCard
-                                                size={18}
-                                            />
-
+                                            <CreditCard size={18} />
                                             Pay Now
                                         </button>
                                     ) : item.status ===
