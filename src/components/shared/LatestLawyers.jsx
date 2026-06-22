@@ -53,7 +53,7 @@ export default function LatestLawyers() {
           </div>
 
           <Link
-            href="/browse-lawyers"
+            href="/lawyers"
             className="
               mt-6 md:mt-0
               inline-flex
