@@ -1,14 +1,3 @@
-// export default function DashboardLayout({
-//   children,
-// }) {
-//   return (
-//     <div className="min-h-screen">
-//       <div className="max-w-7xl mx-auto p-6">
-//         {children}
-//       </div>
-//     </div>
-//   );
-// }
 
 "use client";
 
@@ -122,7 +111,6 @@ export default function DashboardLayout({
         const session =
           await authClient.getSession();
 
-
         if (!session?.data?.user) {
           setLoading(false);
           return;
@@ -144,137 +132,355 @@ export default function DashboardLayout({
     };
 
     getUser();
-
-
   }, []);
 
   if (loading) {
-    return (<div className="flex min-h-screen items-center justify-center bg-[#F7F3EE]"> <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#D4A95A] border-t-transparent"></div> </div>
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#FDFBF7] via-[#F8F5EF] to-[#F2EBDD]">
+
+        <motion.div
+          animate={{
+            rotate: 360,
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 1,
+            ease: "linear",
+          }}
+          className="h-14 w-14 rounded-full border-4 border-[#D4A95A] border-t-transparent"
+        />
+      </div>
     );
   }
 
   const links =
     sidebarLinks[user?.role] || [];
 
-  return (<div className="min-h-screen bg-[#F7F3EE] flex">
-    {/* Sidebar */}
-    <motion.aside
-      initial={{
-        x: -60,
-        opacity: 0,
-      }}
-      animate={{
-        x: 0,
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-      }}
-      className="w-72 bg-white border-r border-[#E8DDCF] shadow-xl"
-    >
-      {/* Logo */} <div className="border-b border-[#E8DDCF] p-6"> <div className="flex items-center gap-3"> <Image
-        src="/newlogo.png"
-        alt="LegalEase"
-        width={60}
-        height={60}
-        priority
-      />
+  return (
+    <div className="relative min-h-screen flex overflow-hidden bg-gradient-to-br from-[#FDFBF7] via-[#F8F5EF] to-[#F2EBDD]">
 
+      {/* Background Effects */}
 
-        <div>
-          <h2 className="text-2xl font-bold text-[#1E1E1E]">
-            LegalEase
-          </h2>
+      <div className="absolute top-20 right-20 w-72 h-72 bg-[#D4A95A]/10 rounded-full blur-3xl" />
 
-          <p className="text-xs text-[#B88A44]">
-            Legal Management
-          </p>
-        </div>
-      </div>
-      </div>
+      <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#B88A44]/10 rounded-full blur-3xl" />
 
-      {/* Profile Card */}
-      {user && (
-        <div className="m-4 rounded-2xl border border-[#E8DDCF] bg-[#FCF8F3] p-4">
+      {/* Sidebar */}
+
+      <motion.aside
+        initial={{
+          x: -80,
+          opacity: 0,
+        }}
+        animate={{
+          x: 0,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.7,
+        }}
+        className="
+        w-72
+        m-4
+        rounded-[36px]
+        bg-white/90
+        backdrop-blur-xl
+        border
+        border-white/60
+        shadow-[0_20px_60px_rgba(0,0,0,0.08)]
+        overflow-hidden
+        "
+      >
+
+        {/* Logo */}
+
+        <div className="border-b border-[#E8DDCF] p-6">
+
           <div className="flex items-center gap-3">
+
             <Image
-              src={
-                user.image ||
-                "https://i.ibb.co/4pDNDk1/avatar.png"
-              }
-              alt="user"
-              width={55}
-              height={55}
-              className="rounded-full object-cover"
+              src="/newlogo.png"
+              alt="LegalEase"
+              width={65}
+              height={65}
+              priority
             />
 
             <div>
-              <h3 className="font-semibold text-[#1E1E1E]">
-                {user.name}
-              </h3>
+              <h2 className="text-3xl font-bold text-[#1E1E1E]">
+                LegalEase
+              </h2>
 
-              <span className="mt-1 inline-block rounded-full bg-[#F1DFC0] px-3 py-1 text-xs text-[#B88A44]">
-                {user.role}
-              </span>
+              <p className="text-xs text-[#B88A44] tracking-wider">
+                Legal Management
+              </p>
             </div>
           </div>
+
+          <div className="mt-5">
+
+            <motion.div
+              animate={{
+                width: [
+                  "20%",
+                  "100%",
+                  "20%",
+                ],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+              }}
+              className="h-[3px] rounded-full bg-gradient-to-r from-[#D4A95A] to-[#B88A44]"
+            />
+          </div>
         </div>
-      )}
 
-      {/* Menu */}
-      <div className="px-4 pt-2">
-        <p className="mb-4 px-3 text-xs font-semibold uppercase tracking-wider text-[#B88A44]">
-          Menu
-        </p>
+        {/* Profile Card */}
 
-        <nav className="space-y-2">
-          {links.map((link) => {
-            const Icon = link.icon;
+        {user && (
+          <motion.div
+            whileHover={{
+              y: -4,
+            }}
+            className="
+            m-4
+            rounded-[28px]
+            bg-gradient-to-br
+            from-[#FFFDF9]
+            to-[#FCF8F3]
+            border
+            border-[#E8DDCF]
+            p-5
+            shadow-lg
+            transition-all
+            duration-500
+            "
+          >
+            <div className="flex items-center gap-4">
 
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`group flex items-center gap-3 rounded-2xl px-4 py-3 font-medium transition-all duration-300
-              
-              ${pathname.startsWith(
-                  link.href
-                )
-                    ? "bg-[#D4A95A] text-white shadow-lg"
-                    : "text-gray-700 hover:bg-[#F4ECE2] hover:text-[#B88A44]"
-                  }
-            `}
-              >
-                <Icon size={20} />
-                <span>{link.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
-    </motion.aside>
+              <Image
+                src={
+                  user.image ||
+                  "https://i.ibb.co/4pDNDk1/avatar.png"
+                }
+                alt="user"
+                width={60}
+                height={60}
+                className="
+                rounded-full
+                object-cover
+                ring-4
+                ring-[#D4A95A]/20
+                "
+              />
 
-    {/* Main Content */}
-    <main className="flex-1 overflow-auto p-8">
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: 20,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 0.4,
-        }}
-        className="rounded-3xl bg-white p-6 shadow-sm border border-[#E8DDCF]"
-      >
-        {children}
-      </motion.div>
-    </main>
-  </div>
+              <div>
+                <h3 className="font-semibold text-lg text-[#1E1E1E]">
+                  {user.name}
+                </h3>
 
+                <span className="mt-2 inline-block rounded-full bg-[#F1DFC0] px-3 py-1 text-xs font-medium text-[#B88A44]">
+                  {user.role}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
+        {/* Menu */}
+
+        <div className="px-4 pt-2">
+
+          <p className="mb-4 px-3 text-xs font-semibold uppercase tracking-[3px] text-[#B88A44]">
+            Menu
+          </p>
+
+          <nav className="space-y-2">
+            {links.map((link) => {
+              const Icon = link.icon;
+
+              const active =
+                pathname === link.href ||
+                pathname.startsWith(
+                  `${link.href}/`
+                );
+
+              return (
+                <motion.div
+                  key={link.href}
+                  whileHover={{
+                    x: 6,
+                    scale: 1.02,
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                  }}
+                >
+                  <Link
+                    href={link.href}
+                    className={`
+                    group
+                    flex
+                    items-center
+                    gap-3
+                    rounded-2xl
+                    px-4
+                    py-3
+                    font-medium
+                    transition-all
+                    duration-300
+
+                    ${active
+                        ? `
+                        bg-gradient-to-r
+                        from-[#D4A95A]
+                        to-[#B88A44]
+                        text-white
+                        shadow-[0_10px_25px_rgba(212,169,90,0.35)]
+                        `
+                        : `
+                        text-gray-700
+                        hover:bg-[#F4ECE2]
+                        hover:text-[#B88A44]
+                        `
+                      }
+                  `}
+                  >
+                    <Icon size={20} />
+
+                    <span>
+                      {link.name}
+                    </span>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Bottom Glow */}
+
+        <div className="mt-auto p-5">
+          <div className="rounded-2xl bg-gradient-to-r from-[#D4A95A]/10 to-[#B88A44]/10 p-4 text-center">
+
+            <p className="text-xs text-gray-500">
+              LegalEase Dashboard
+            </p>
+
+            <h4 className="mt-1 font-semibold text-[#B88A44]">
+              Premium Workspace
+            </h4>
+          </div>
+        </div>
+      </motion.aside>
+
+      {/* Main Content */}
+
+      <main className="flex-1 p-4 md:p-6 overflow-auto">
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            scale: 0.96,
+            y: 40,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.7,
+          }}
+          className="
+          relative
+          min-h-[calc(100vh-32px)]
+          rounded-[40px]
+          bg-white/90
+          backdrop-blur-xl
+          border
+          border-white
+          shadow-[0_20px_60px_rgba(0,0,0,0.08)]
+          overflow-hidden
+          "
+        >
+
+          {/* Decorative Background */}
+
+          <div className="absolute -top-24 -right-24 w-72 h-72 bg-[#D4A95A]/10 rounded-full blur-3xl" />
+
+          <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-[#B88A44]/10 rounded-full blur-3xl" />
+
+          {/* Top Header */}
+
+          <div className="relative z-10 border-b border-[#F0E6D9] px-8 py-6">
+
+            <div className="flex items-center justify-between">
+
+              <div>
+                <h1 className="text-3xl font-bold text-[#1E1E1E]">
+                  Welcome Back
+                </h1>
+
+                <p className="mt-1 text-gray-500">
+                  Manage your legal
+                  workspace efficiently
+                </p>
+              </div>
+
+              {user && (
+                <motion.div
+                  whileHover={{
+                    scale: 1.05,
+                  }}
+                  className="
+                  hidden
+                  md:flex
+                  items-center
+                  gap-3
+                  rounded-2xl
+                  bg-[#FCF8F3]
+                  px-4
+                  py-2
+                  border
+                  border-[#E8DDCF]
+                  "
+                >
+                  <Image
+                    src={
+                      user.image ||
+                      "https://i.ibb.co/4pDNDk1/avatar.png"
+                    }
+                    alt="profile"
+                    width={45}
+                    height={45}
+                    className="rounded-full"
+                  />
+
+                  <div>
+                    <p className="font-semibold text-sm">
+                      {user.name}
+                    </p>
+
+                    <p className="text-xs text-[#B88A44] capitalize">
+                      {user.role}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          </div>
+
+          {/* Page Content */}
+
+          <div className="relative z-10 p-8">
+            {children}
+          </div>
+
+        </motion.div>
+      </main>
+    </div>
   );
 }
+
