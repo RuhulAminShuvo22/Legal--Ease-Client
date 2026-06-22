@@ -140,7 +140,7 @@ const LawyerDetailsPage = () => {
                                 </h3>
 
                                 <p className="text-3xl font-bold text-[#B88A44] mt-2">
-                                    ৳{lawyer.fee}
+                                    ${lawyer.fee}
                                 </p>
                             </motion.div>
 
