@@ -53,30 +53,33 @@ const LawyerHiringHistoryPage = () => {
         status
     ) => {
         try {
-            await fetch(
-                `http://localhost:5000/hirings/${id}`,
+            const endpoint =
+                status === "accepted"
+                    ? `http://localhost:5000/hirings/accept/${id}`
+                    : `http://localhost:5000/hirings/reject/${id}`;
+
+            const res = await fetch(
+                endpoint,
                 {
                     method: "PATCH",
-                    headers: {
-                        "Content-Type":
-                            "application/json",
-                    },
-                    body: JSON.stringify({
-                        status,
-                    }),
                 }
             );
 
-            setHirings((prev) =>
-                prev.map((item) =>
-                    item._id === id
-                        ? {
-                            ...item,
-                            status,
-                        }
-                        : item
-                )
-            );
+            const data =
+                await res.json();
+
+            if (data.success) {
+                setHirings((prev) =>
+                    prev.map((item) =>
+                        item._id === id
+                            ? {
+                                ...item,
+                                status,
+                            }
+                            : item
+                    )
+                );
+            }
         } catch (error) {
             console.log(error);
         }
