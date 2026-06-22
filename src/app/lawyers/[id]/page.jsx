@@ -1,8 +1,13 @@
 "use client";
+
 import { FaGavel, FaCalendarCheck } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { authClient } from "@/lib/auth-client";
+
 import {
     FaMapMarkerAlt,
     FaPhoneAlt,
@@ -13,9 +18,18 @@ import {
 
 const LawyerDetailsPage = () => {
     const { id } = useParams();
+    const router = useRouter();
 
-    const [lawyer, setLawyer] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const { data: session } =
+        authClient.useSession();
+
+    const user = session?.user;
+
+    const [lawyer, setLawyer] =
+        useState(null);
+
+    const [loading, setLoading] =
+        useState(true);
 
     useEffect(() => {
         const fetchLawyer = async () => {
@@ -24,7 +38,8 @@ const LawyerDetailsPage = () => {
                     `http://localhost:5000/lawyers/${id}`
                 );
 
-                const data = await res.json();
+                const data =
+                    await res.json();
 
                 setLawyer(data);
             } catch (error) {
@@ -38,6 +53,82 @@ const LawyerDetailsPage = () => {
             fetchLawyer();
         }
     }, [id]);
+
+    const handleHireLawyer =
+        async () => {
+            if (!user) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please Login First",
+                });
+
+                return;
+            }
+
+            const result =
+                await Swal.fire({
+                    title: "Hire This Lawyer?",
+                    text: `You are about to send a hiring request to ${lawyer.name}`,
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#B88A44",
+                    confirmButtonText:
+                        "Yes, Hire",
+                });
+
+            if (!result.isConfirmed)
+                return;
+
+            const hiringData = {
+                lawyerId: lawyer._id,
+                lawyerName: lawyer.name,
+                lawyerEmail:
+                    lawyer.email,
+
+                clientName:
+                    user.name,
+                clientEmail:
+                    user.email,
+
+                fee: lawyer.fee,
+
+                status: "pending",
+                paymentStatus:
+                    "unpaid",
+
+                createdAt:
+                    new Date(),
+            };
+
+            try {
+                await axios.post(
+                    "http://localhost:5000/hirings",
+                    hiringData
+                );
+
+                Swal.fire({
+                    icon: "success",
+                    title:
+                        "Hiring Request Sent",
+                    text:
+                        "Please wait for lawyer approval",
+                    timer: 2000,
+                    showConfirmButton: false,
+                });
+
+                router.push(
+                    "/dashboard/client/hiring-history"
+                );
+            } catch (error) {
+                console.log(error);
+
+                Swal.fire({
+                    icon: "error",
+                    title:
+                        "Failed to Send Request",
+                });
+            }
+        };
 
     if (loading) {
         return (
@@ -61,19 +152,25 @@ const LawyerDetailsPage = () => {
         <div className="min-h-screen bg-gradient-to-br from-[#FCF8F3] via-white to-[#FFF7E8] py-16 px-4">
 
             <motion.div
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
+                initial={{
+                    opacity: 0,
+                    y: 60,
+                }}
+                animate={{
+                    opacity: 1,
+                    y: 0,
+                }}
+                transition={{
+                    duration: 0.7,
+                }}
                 className="max-w-6xl mx-auto"
             >
 
                 <div className="bg-white rounded-[32px] overflow-hidden shadow-2xl">
 
-                    {/* Cover */}
                     <div className="h-56 bg-gradient-to-r from-[#D4A95A] via-[#C89A48] to-[#B88A44]" />
 
                     <div className="px-8 md:px-12 pb-12">
-
                         {/* Image */}
                         <div className="flex flex-col md:flex-row md:items-end gap-6">
 
@@ -100,6 +197,7 @@ const LawyerDetailsPage = () => {
                                     >
                                         {lawyer.status}
                                     </span>
+
                                 </div>
 
                                 <p className="text-[#B88A44] font-semibold text-lg mt-2">
@@ -125,10 +223,10 @@ const LawyerDetailsPage = () => {
 
                                 </div>
                             </div>
-
                         </div>
 
                         {/* Stats */}
+
                         <div className="grid md:grid-cols-3 gap-5 mt-10">
 
                             <motion.div
@@ -173,9 +271,11 @@ const LawyerDetailsPage = () => {
                         </div>
 
                         {/* Contact */}
+
                         <div className="grid md:grid-cols-2 gap-6 mt-10">
 
                             <div className="bg-gray-50 p-6 rounded-2xl">
+
                                 <h3 className="font-bold text-xl mb-4">
                                     Contact Information
                                 </h3>
@@ -201,6 +301,7 @@ const LawyerDetailsPage = () => {
                             </div>
 
                             <div className="bg-gray-50 p-6 rounded-2xl">
+
                                 <h3 className="font-bold text-xl mb-4">
                                     Professional Summary
                                 </h3>
@@ -208,23 +309,30 @@ const LawyerDetailsPage = () => {
                                 <p className="text-gray-600 leading-8">
                                     {lawyer.about}
                                 </p>
+
                             </div>
 
                         </div>
 
                         {/* Buttons */}
+
                         <div className="flex flex-wrap gap-5 mt-10">
 
                             <button
+                                onClick={handleHireLawyer}
                                 className="
-        group relative overflow-hidden
-        px-8 py-4 rounded-2xl
-        bg-gradient-to-r from-[#D4A95A] via-[#C89A48] to-[#B88A44]
-        text-white font-bold tracking-wide
-        shadow-xl
-        transition-all duration-500
-        hover:-translate-y-1 hover:scale-105
-        "
+    group relative overflow-hidden
+    px-8 py-4 rounded-2xl
+    bg-gradient-to-r
+    from-[#D4A95A]
+    via-[#C89A48]
+    to-[#B88A44]
+    text-white font-bold tracking-wide
+    shadow-xl
+    transition-all duration-500
+    hover:-translate-y-1
+    hover:scale-105
+    "
                             >
                                 <span className="relative z-10 flex items-center gap-3">
                                     <FaGavel />
@@ -235,22 +343,23 @@ const LawyerDetailsPage = () => {
                             </button>
 
                             <button
+                                onClick={handleHireLawyer}
                                 className="
-        group
-        px-8 py-4 rounded-2xl
-        border-2 border-[#D4A95A]
-        text-[#B88A44]
-        font-bold tracking-wide
-        bg-white
-        transition-all duration-500
-        hover:bg-gradient-to-r
-        hover:from-[#D4A95A]
-        hover:to-[#B88A44]
-        hover:text-white
-        hover:border-transparent
-        hover:-translate-y-1
-        hover:shadow-xl
-        "
+    group
+    px-8 py-4 rounded-2xl
+    border-2 border-[#D4A95A]
+    text-[#B88A44]
+    font-bold tracking-wide
+    bg-white
+    transition-all duration-500
+    hover:bg-gradient-to-r
+    hover:from-[#D4A95A]
+    hover:to-[#B88A44]
+    hover:text-white
+    hover:border-transparent
+    hover:-translate-y-1
+    hover:shadow-xl
+    "
                             >
                                 <span className="flex items-center gap-3">
                                     <FaCalendarCheck />
