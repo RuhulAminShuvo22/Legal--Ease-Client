@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { authClient } from "@/lib/auth-client";
 import { motion } from "framer-motion";
-
+import { useRouter } from "next/navigation";
 import {
     FaUser,
     FaCalendarAlt,
@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 
 const LawyerConsultationsPage = () => {
+    const router = useRouter();
     const { data: session } =
         authClient.useSession();
 
@@ -273,20 +274,25 @@ const LawyerConsultationsPage = () => {
                                             whileTap={{
                                                 scale: 0.97,
                                             }}
+                                            onClick={() =>
+                                                router.push(
+                                                    `/dashboard/lawyer/my-consultations/${consultation._id}`
+                                                )
+                                            }
                                             className="
-                w-full
-                py-3
-                rounded-xl
-                bg-gradient-to-r
-                from-[#D4A95A]
-                to-[#B88A44]
-                text-white
-                font-semibold
-                shadow-md
-                hover:shadow-lg
-                transition-all
-                duration-300
-              "
+            w-full
+            py-3
+            rounded-xl
+            bg-gradient-to-r
+            from-[#D4A95A]
+            to-[#B88A44]
+            text-white
+            font-semibold
+            shadow-md
+            hover:shadow-lg
+            transition-all
+            duration-300
+        "
                                         >
                                             View Details
                                         </motion.button>
