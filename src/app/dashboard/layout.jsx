@@ -18,6 +18,7 @@ import {
   History,
   Wallet,
   CalendarCheck,
+  CalendarDays,
 } from "lucide-react";
 
 const sidebarLinks = {
