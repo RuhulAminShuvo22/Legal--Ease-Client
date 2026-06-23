@@ -101,3 +101,63 @@ const AddCommentPage = () => {
       </div>
     );
   }
+    return (
+    <div className="min-h-screen bg-[#F7F3EE] p-6">
+
+      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+
+        <h1 className="text-4xl font-bold text-[#B88A44] mb-8">
+          Leave A Review
+        </h1>
+
+        <div className="bg-[#FFF8EC] p-6 rounded-2xl mb-8">
+
+          <h2 className="text-2xl font-bold">
+            {consultation.lawyerName}
+          </h2>
+
+          <p className="text-gray-500 mt-2">
+            Share your experience with this lawyer
+          </p>
+
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6"
+        >
+          <div>
+            <label className="font-semibold block mb-2">
+              Rating
+            </label>
+
+            <select
+              value={rating}
+              onChange={(e) =>
+                setRating(Number(e.target.value))
+              }
+              className="select select-bordered w-full"
+            >
+              <option value={5}>⭐⭐⭐⭐⭐ (5)</option>
+              <option value={4}>⭐⭐⭐⭐ (4)</option>
+              <option value={3}>⭐⭐⭐ (3)</option>
+              <option value={2}>⭐⭐ (2)</option>
+              <option value={1}>⭐ (1)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="font-semibold block mb-2">
+              Your Comment
+            </label>
+
+            <textarea
+              value={comment}
+              onChange={(e) =>
+                setComment(e.target.value)
+              }
+              required
+              placeholder="Write your experience..."
+              className="textarea textarea-bordered w-full h-40"
+            />
+          </div>
