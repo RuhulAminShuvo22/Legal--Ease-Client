@@ -12,13 +12,23 @@ import {
 export default function LawyerCard({ lawyer }) {
   return (
     <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.25 }}
-      className="bg-[#FFFFFF] border border-[#E8DDCF] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{
+        y: -10,
+        scale: 1.02,
+      }}
+      transition={{
+        duration: 0.35,
+      }}
+      className="bg-[#FFFFFF] border border-[#E8DDCF] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300"
     >
       {/* Image */}
-      <div className="relative">
-        <img
+      <div className="relative overflow-hidden">
+        <motion.img
+          whileHover={{ scale: 1.08 }}
+          transition={{ duration: 0.4 }}
           src={lawyer.photo}
           alt={lawyer.name}
           className="w-full h-72 object-cover"
@@ -38,7 +48,6 @@ export default function LawyerCard({ lawyer }) {
 
       {/* Content */}
       <div className="p-6">
-
         {/* Name */}
         <h2 className="text-2xl font-bold text-[#1E1E1E]">
           {lawyer.name}
@@ -67,7 +76,6 @@ export default function LawyerCard({ lawyer }) {
             size={18}
             className="fill-[#D4A95A] text-[#D4A95A]"
           />
-
           <span className="font-semibold text-[#1E1E1E]">
             {lawyer.rating}
           </span>
@@ -89,24 +97,19 @@ export default function LawyerCard({ lawyer }) {
           </span>
         </div>
 
-        {/* Buttons */}
-        <div className="grid grid-cols-2 gap-3 mt-6">
-
+        {/* View Profile Button */}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="mt-6"
+        >
           <Link
             href={`/lawyers/${lawyer._id}`}
-            className="text-center border border-[#D4A95A] text-[#B88A44] py-3 rounded-xl font-semibold hover:bg-[#FCF8F3] transition"
+            className="block w-full text-center bg-gradient-to-r from-[#D4A95A] to-[#B88A44] text-white py-3 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300"
           >
             View Profile
           </Link>
-
-          <button
-            className="bg-gradient-to-r from-[#D4A95A] to-[#B88A44] text-white py-3 rounded-xl font-semibold hover:opacity-90 transition"
-          >
-            Hire Now
-          </button>
-
-        </div>
-
+        </motion.div>
       </div>
     </motion.div>
   );
