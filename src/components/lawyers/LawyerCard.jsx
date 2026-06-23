@@ -89,7 +89,7 @@ export default function LawyerCard({ lawyer }) {
           />
 
           <span className="text-xl font-bold text-[#B88A44]">
-            ৳ {lawyer.fee}
+            $ {lawyer.fee}
           </span>
 
           <span className="text-[#6B7280] text-sm">
