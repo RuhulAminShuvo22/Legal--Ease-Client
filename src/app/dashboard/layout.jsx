@@ -17,6 +17,7 @@ import {
   UserCog,
   History,
   Wallet,
+  CalendarCheck,
 } from "lucide-react";
 
 const sidebarLinks = {
@@ -81,6 +82,11 @@ const sidebarLinks = {
       name: "Hiring History",
       href: "/dashboard/client/hiring-history",
       icon: History,
+    },
+    {
+      name: "My Consultations",
+      href: "/dashboard/client/my-consultations",
+      icon: CalendarCheck,
     },
     {
       name: "Comments",
