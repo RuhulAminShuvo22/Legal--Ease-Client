@@ -4,24 +4,15 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { authClient } from "@/lib/auth-client";
 import { motion } from "framer-motion";
 import { FaStar } from "react-icons/fa";
-
-const AddCommentPage = () => {
+//
+const EditReviewPage = () => {
     const { id } = useParams();
     const router = useRouter();
 
-    const { data: session } =
-        authClient.useSession();
-
-    const user = session?.user;
-
-    const [consultation, setConsultation] =
+    const [review, setReview] =
         useState(null);
-
-    const [loading, setLoading] =
-        useState(true);
 
     const [rating, setRating] =
         useState(5);
@@ -29,18 +20,27 @@ const AddCommentPage = () => {
     const [comment, setComment] =
         useState("");
 
+    const [loading, setLoading] =
+        useState(true);
+
     useEffect(() => {
-        const fetchConsultation =
+        const fetchReview =
             async () => {
                 try {
                     const res =
                         await axios.get(
-                            `http://localhost:5000/consultations/${id}`
+                            `http://localhost:5000/reviews/${id}`
                         );
 
 
-                    setConsultation(
-                        res.data
+                    setReview(res.data);
+
+                    setRating(
+                        res.data.rating
+                    );
+
+                    setComment(
+                        res.data.comment
                     );
                 } catch (error) {
                     console.log(error);
@@ -50,65 +50,34 @@ const AddCommentPage = () => {
             };
 
         if (id) {
-            fetchConsultation();
+            fetchReview();
         }
 
 
     }, [id]);
 
-    const handleSubmit =
+    const handleUpdate =
         async (e) => {
             e.preventDefault();
 
 
             try {
-                const reviewData = {
-                    consultationId:
-                        consultation._id,
-
-                    lawyerId:
-                        consultation.lawyerId,
-
-                    lawyerName:
-                        consultation.lawyerName,
-
-                    lawyerEmail:
-                        consultation.lawyerEmail,
-
-                    clientName:
-                        user?.name,
-
-                    clientEmail:
-                        user?.email,
-
-                    rating,
-                    comment,
-
-                    createdAt:
-                        new Date(),
-                };
-
                 const res =
-                    await axios.post(
-                        "http://localhost:5000/reviews",
-                        reviewData
-                    );
-
-                if (res.data.success) {
                     await axios.patch(
-                        `http://localhost:5000/consultations/${consultation._id}`,
+                        `http://localhost:5000/reviews/${id}`,
                         {
-                            reviewSubmitted:
-                                true,
+                            rating,
+                            comment,
                         }
                     );
 
+                if (res.data.success) {
                     Swal.fire({
                         icon: "success",
                         title:
-                            "Review Submitted",
+                            "Review Updated",
                         text:
-                            "Thank you for your feedback.",
+                            "Your review has been updated successfully.",
                     });
 
                     router.push(
@@ -122,9 +91,7 @@ const AddCommentPage = () => {
                     icon: "error",
                     title: "Failed",
                     text:
-                        error?.response?.data
-                            ?.message ||
-                        "Something went wrong.",
+                        "Failed to update review.",
                 });
             }
         };
@@ -135,30 +102,14 @@ const AddCommentPage = () => {
         );
     }
 
-    if (!consultation) {
+    if (!review) {
         return (<div className="text-center py-20"> <h2 className="text-3xl font-bold">
-            Consultation Not Found </h2> </div>
-        );
-    }
-
-    if (
-        consultation.status?.toLowerCase() !==
-        "completed"
-    ) {
-        return (<div className="min-h-screen flex items-center justify-center"> <div className="bg-white p-10 rounded-3xl shadow-xl text-center max-w-lg"> <h2 className="text-3xl font-bold text-red-600">
-            Review Not Allowed </h2>
-
-
-            <p className="mt-4 text-gray-500">
-                Consultation must be completed before submitting a review.
-            </p>
-        </div>
-        </div>
+            Review Not Found </h2> </div>
         );
     }
     return (<div className="min-h-screen bg-[#F7F3EE] p-6">
 
-        ```
+
         <motion.div
             initial={{
                 opacity: 0,
@@ -172,23 +123,23 @@ const AddCommentPage = () => {
         >
 
             <h1 className="text-4xl font-bold text-[#B88A44] mb-8">
-                Leave A Review
+                Edit Review
             </h1>
 
             <div className="bg-[#FFF8EC] p-6 rounded-2xl mb-8">
 
                 <h2 className="text-2xl font-bold">
-                    {consultation.lawyerName}
+                    {review.lawyerName}
                 </h2>
 
                 <p className="text-gray-500 mt-2">
-                    Share your experience with this lawyer
+                    Update your review and rating.
                 </p>
 
             </div>
 
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleUpdate}
                 className="space-y-6"
             >
 
@@ -209,10 +160,9 @@ const AddCommentPage = () => {
                                             star
                                         )
                                     }
-                                    className={`transition ${star <=
-                                        rating
-                                        ? "text-yellow-400"
-                                        : "text-gray-300"
+                                    className={`transition ${star <= rating
+                                            ? "text-yellow-400"
+                                            : "text-gray-300"
                                         }`}
                                 >
                                     <FaStar />
@@ -226,7 +176,7 @@ const AddCommentPage = () => {
 
                 <div>
                     <label className="font-semibold block mb-2">
-                        Your Comment
+                        Comment
                     </label>
 
                     <textarea
@@ -237,7 +187,6 @@ const AddCommentPage = () => {
                             )
                         }
                         required
-                        placeholder="Write your experience..."
                         className="textarea textarea-bordered w-full h-40"
                     />
                 </div>
@@ -260,7 +209,7 @@ const AddCommentPage = () => {
         transition
         "
                 >
-                    Submit Review
+                    Update Review
                 </button>
 
             </form>
@@ -268,7 +217,10 @@ const AddCommentPage = () => {
         </motion.div>
 
     </div>
+
+
     );
 };
-export default AddCommentPage;
+
+export default EditReviewPage;
 
