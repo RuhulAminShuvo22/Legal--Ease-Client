@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
+import Swal from "sweetalert2";
 import { authClient } from "@/lib/auth-client";
 import { motion } from "framer-motion";
 
@@ -10,6 +12,8 @@ import {
     FaCommentDots,
     FaUserTie,
     FaBalanceScale,
+    FaEdit,
+    FaTrash,
 } from "react-icons/fa";
 
 const ClientCommentsPage = () => {
@@ -46,33 +50,102 @@ const ClientCommentsPage = () => {
         fetchReviews();
     }, [user]);
 
+    const handleDelete =
+        async (id) => {
+            const result =
+                await Swal.fire({
+                    title:
+                        "Delete Review?",
+                    text:
+                        "This action cannot be undone.",
+                    icon:
+                        "warning",
+                    showCancelButton: true,
+                    confirmButtonText:
+                        "Yes, Delete",
+                    confirmButtonColor:
+                        "#dc2626",
+                });
+
+            if (
+                !result.isConfirmed
+            )
+                return;
+
+            try {
+                const res =
+                    await axios.delete(
+                        `http://localhost:5000/reviews/${id}`
+                    );
+
+                if (
+                    res.data.success
+                ) {
+                    setReviews(
+                        reviews.filter(
+                            (
+                                review
+                            ) =>
+                                review._id !==
+                                id
+                        )
+                    );
+
+                    Swal.fire({
+                        icon:
+                            "success",
+                        title:
+                            "Deleted",
+                        text:
+                            "Review deleted successfully.",
+                    });
+                }
+            } catch (error) {
+                console.log(
+                    error
+                );
+
+                Swal.fire({
+                    icon:
+                        "error",
+                    title:
+                        "Failed",
+                    text:
+                        "Could not delete review.",
+                });
+            }
+        };
+
     const averageRating =
         reviews.length > 0
             ? (
                 reviews.reduce(
-                    (sum, review) =>
+                    (
+                        sum,
+                        review
+                    ) =>
                         sum +
                         Number(
                             review.rating
                         ),
                     0
-                ) / reviews.length
+                ) /
+                reviews.length
             ).toFixed(1)
             : 0;
 
     if (loading) {
         return (
             <div className="min-h-[70vh] flex flex-col justify-center items-center">
-
                 <div className="w-16 h-16 border-4 border-[#D4A95A] border-t-transparent rounded-full animate-spin"></div>
 
                 <p className="mt-4 text-[#B88A44] font-medium">
                     Loading Reviews...
                 </p>
-
             </div>
         );
     }
+
     return (
         <div className="min-h-screen bg-[#F7F3EE] p-6 md:p-10">
 
@@ -92,8 +165,7 @@ const ClientCommentsPage = () => {
                 </h1>
 
                 <p className="text-gray-500 mt-3">
-                    All reviews you have submitted
-                    for lawyers.
+                    All reviews you have submitted for lawyers.
                 </p>
             </motion.div>
 
@@ -144,7 +216,6 @@ const ClientCommentsPage = () => {
 
                 </div>
             </motion.div>
-
             {reviews.length === 0 ? (
                 <div className="bg-white rounded-3xl p-12 shadow-lg text-center">
 
@@ -153,20 +224,22 @@ const ClientCommentsPage = () => {
                     </h2>
 
                     <p className="text-gray-500 mt-3">
-                        You have not submitted
-                        any reviews yet.
+                        You have not submitted any reviews yet.
                     </p>
 
                 </div>
             ) : (
                 <div className="grid lg:grid-cols-2 gap-8">
+
                     {reviews.map(
                         (
                             review,
                             index
                         ) => (
                             <motion.div
-                                key={review._id}
+                                key={
+                                    review._id
+                                }
                                 initial={{
                                     opacity: 0,
                                     y: 40,
@@ -178,7 +251,8 @@ const ClientCommentsPage = () => {
                                 transition={{
                                     duration: 0.5,
                                     delay:
-                                        index * 0.1,
+                                        index *
+                                        0.1,
                                 }}
                                 whileHover={{
                                     y: -8,
@@ -196,6 +270,7 @@ const ClientCommentsPage = () => {
                                 duration-500
                                 "
                             >
+
                                 <div className="h-1 bg-gradient-to-r from-[#D4A95A] to-[#B88A44]" />
 
                                 <div className="p-7">
@@ -247,7 +322,9 @@ const ClientCommentsPage = () => {
                                                     }
                                                     className={
                                                         i <
-                                                            review.rating
+                                                            Number(
+                                                                review.rating
+                                                            )
                                                             ? "text-yellow-400"
                                                             : "text-gray-300"
                                                     }
@@ -269,20 +346,78 @@ const ClientCommentsPage = () => {
 
                                     </div>
 
-                                    <div className="mt-6 pt-4 border-t border-[#F3E3C7] text-sm text-gray-500">
+                                    <div className="mt-6 pt-4 border-t border-[#F3E3C7]">
 
-                                        {new Date(
-                                            review.createdAt
-                                        ).toLocaleDateString()}
+                                        <div className="flex justify-between items-center">
+
+                                            <span className="text-sm text-gray-500">
+                                                {new Date(
+                                                    review.createdAt
+                                                ).toLocaleDateString()}
+                                            </span>
+
+                                            <div className="flex gap-3">
+
+                                                <Link
+                                                    href={`/dashboard/client/comments/edit/${review._id}`}
+                                                >
+                                                    <button
+                                                        className="
+                                                        px-4
+                                                        py-2
+                                                        rounded-lg
+                                                        bg-blue-100
+                                                        text-blue-700
+                                                        hover:bg-blue-200
+                                                        transition
+                                                        flex
+                                                        items-center
+                                                        gap-2
+                                                        "
+                                                    >
+                                                        <FaEdit />
+                                                        Edit
+                                                    </button>
+                                                </Link>
+
+                                                <button
+                                                    onClick={() =>
+                                                        handleDelete(
+                                                            review._id
+                                                        )
+                                                    }
+                                                    className="
+                                                    px-4
+                                                    py-2
+                                                    rounded-lg
+                                                    bg-red-100
+                                                    text-red-700
+                                                    hover:bg-red-200
+                                                    transition
+                                                    flex
+                                                    items-center
+                                                    gap-2
+                                                    "
+                                                >
+                                                    <FaTrash />
+                                                    Delete
+                                                </button>
+
+                                            </div>
+
+                                        </div>
 
                                     </div>
 
                                 </div>
+
                             </motion.div>
                         )
                     )}
+
                 </div>
             )}
+
         </div>
     );
 };

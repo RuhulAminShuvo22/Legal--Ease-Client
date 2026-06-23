@@ -424,75 +424,67 @@ const MyConsultationsPage = () => {
 
                                     {/* Buttons */}
 
-                                    <div className="mt-6 pt-5 border-t border-[#F3E3C7] space-y-3">
+                                    <div className="mt-6 pt-5 border-t border-[#F3E3C7] flex flex-col gap-3">
                                         <Link
                                             href={`/dashboard/client/my-consultations/${consultation._id}`}
+                                            className="block"
                                         >
                                             <motion.button
-                                                whileHover={{
-                                                    scale: 1.03,
-                                                }}
-                                                whileTap={{
-                                                    scale: 0.97,
-                                                }}
+                                                whileHover={{ scale: 1.03 }}
+                                                whileTap={{ scale: 0.97 }}
                                                 className="
-                        w-full
-                        py-3
-                        rounded-xl
-                        bg-gradient-to-r
-                        from-[#D4A95A]
-                        to-[#B88A44]
-                        text-white
-                        font-semibold
-                        shadow-md
-                        hover:shadow-xl
-                        flex
-                        justify-center
-                        items-center
-                        gap-2
-                        "
+                w-full
+                py-3
+                rounded-xl
+                bg-gradient-to-r
+                from-[#D4A95A]
+                to-[#B88A44]
+                text-white
+                font-semibold
+                shadow-md
+                hover:shadow-xl
+                flex
+                justify-center
+                items-center
+                gap-2
+            "
                                             >
                                                 View Details
                                                 <FaArrowRight />
                                             </motion.button>
                                         </Link>
 
-                                        {consultation.status?.toLowerCase() ===
-                                            "completed" && (
-                                                <Link
-                                                    href={`/dashboard/client/comments/${consultation._id}`}
+                                        {consultation.status?.toLowerCase() === "completed" && (
+                                            <Link
+                                                href={`/dashboard/client/comments/${consultation._id}`}
+                                                className="block"
+                                            >
+                                                <motion.button
+                                                    whileHover={{ scale: 1.03 }}
+                                                    whileTap={{ scale: 0.97 }}
+                                                    className="
+                    w-full
+                    py-3
+                    rounded-xl
+                    border-2
+                    border-[#B88A44]
+                    text-[#B88A44]
+                    font-semibold
+                    hover:bg-[#B88A44]
+                    hover:text-white
+                    transition-all
+                    duration-300
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
+                "
                                                 >
-                                                    <motion.button
-                                                        whileHover={{
-                                                            scale: 1.03,
-                                                        }}
-                                                        whileTap={{
-                                                            scale: 0.97,
-                                                        }}
-                                                        className="
-                          w-full
-                          py-3
-                          rounded-xl
-                          border-2
-                          border-[#B88A44]
-                          text-[#B88A44]
-                          font-semibold
-                          hover:bg-[#B88A44]
-                          hover:text-white
-                          transition-all
-                          duration-300
-                          flex
-                          items-center
-                          justify-center
-                          gap-2
-                          "
-                                                    >
-                                                        <FaStar />
-                                                        Write Review
-                                                    </motion.button>
-                                                </Link>
-                                            )}
-
+                                                    <FaStar />
+                                                    Write Review
+                                                </motion.button>
+                                            </Link>
+                                        )}
                                     </div>
 
                                 </div>

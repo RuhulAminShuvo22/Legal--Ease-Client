@@ -10,6 +10,7 @@ import { authClient } from "@/lib/auth-client";
 import {
   LayoutDashboard,
   Users,
+  Star,
   ReceiptText,
   BarChart3,
   BriefcaseBusiness,
@@ -60,6 +61,11 @@ const sidebarLinks = {
       name: "My Consultations",
       href: "/dashboard/lawyer/my-consultations",
       icon: CalendarDays,
+    },
+    {
+      name: "Client Reviews",
+      href: "/dashboard/lawyer/reviews",
+      icon: Star,
     },
     {
       name: "Manage Services",
