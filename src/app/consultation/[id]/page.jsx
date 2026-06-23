@@ -42,18 +42,54 @@ const ConsultationPage = () => {
         }
     }, [id]);
 
-    const handleBook =
-        async (e) => {
-            e.preventDefault();
+    const handleBook = async (e) => {
+        e.preventDefault();
+
+        try {
+            const consultationData = {
+                hiringId: hiring._id,
+
+                lawyerId: hiring.lawyerId,
+                lawyerName: hiring.lawyerName,
+                lawyerEmail: hiring.lawyerEmail,
+
+                clientName: hiring.clientName,
+                clientEmail: hiring.clientEmail,
+
+                consultationDate: date,
+                notes,
+
+                fee: hiring.fee,
+
+                status: "scheduled",
+                createdAt: new Date(),
+            };
+
+            const res = await axios.post(
+                "http://localhost:5000/consultations",
+                consultationData
+            );
+
+            if (res.data.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Consultation Booked",
+                    text: "Your consultation has been scheduled successfully.",
+                });
+
+                setDate("");
+                setNotes("");
+            }
+        } catch (error) {
+            console.log(error);
 
             Swal.fire({
-                icon: "success",
-                title:
-                    "Consultation Booked",
-                text:
-                    "Your consultation request has been submitted.",
+                icon: "error",
+                title: "Booking Failed",
+                text: "Something went wrong.",
             });
-        };
+        }
+    };
 
     if (loading) {
         return (
