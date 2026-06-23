@@ -130,6 +130,51 @@ const LawyerDetailsPage = () => {
             }
         };
 
+    const handleBookConsultation = async () => {
+        if (!user) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please Login First",
+            });
+
+            return;
+        }
+
+        try {
+            const res = await axios.get(
+                `http://localhost:5000/hirings/client/${user.email}`
+            );
+
+            const hirings = res.data;
+
+            const approvedHiring = hirings.find(
+                (item) =>
+                    item.lawyerId === lawyer._id &&
+                    item.status === "accepted" &&
+                    item.paymentStatus === "paid"
+            );
+
+            if (!approvedHiring) {
+                return Swal.fire({
+                    icon: "warning",
+                    title: "Hire & Pay First",
+                    text: "You must hire this lawyer and complete payment before booking a consultation.",
+                });
+            }
+
+            router.push(
+                `/consultation/${approvedHiring._id}`
+            );
+        } catch (error) {
+            console.log(error);
+
+            Swal.fire({
+                icon: "error",
+                title: "Something went wrong",
+            });
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
@@ -191,8 +236,8 @@ const LawyerDetailsPage = () => {
 
                                     <span
                                         className={`badge badge-lg ${lawyer.status === "Available"
-                                                ? "badge-success"
-                                                : "badge-error"
+                                            ? "badge-success"
+                                            : "badge-error"
                                             }`}
                                     >
                                         {lawyer.status}
