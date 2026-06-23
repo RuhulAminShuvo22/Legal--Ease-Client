@@ -114,11 +114,15 @@ export default function LatestLawyers() {
               <div className="relative h-64">
                 <Image
                   src={
+                    lawyer.photo ||
                     lawyer.image ||
-                    "https://i.ibb.co/z4J1W6h/lawyer.jpg"
+                    "/default-lawyer.jpg"
                   }
                   alt={lawyer.name}
                   fill
+                  sizes="(max-width:768px) 100vw,
+         (max-width:1200px) 50vw,
+         33vw"
                   className="object-cover"
                 />
               </div>
