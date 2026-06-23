@@ -56,6 +56,11 @@ const sidebarLinks = {
       icon: History,
     },
     {
+      name: "My Consultations",
+      href: "/dashboard/lawyer/my-consultations",
+      icon: CalendarDays,
+    },
+    {
       name: "Manage Services",
       href: "/dashboard/lawyer/manage-legal-profile",
       icon: BriefcaseBusiness,
