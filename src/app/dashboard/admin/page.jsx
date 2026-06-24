@@ -152,4 +152,257 @@ const AdminDashboardPage = () => {
             {/* Stats Grid */}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+                                {/* Total Users */}
+
+                <motion.div
+                    whileHover={{
+                        y: -8,
+                        scale: 1.03,
+                    }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-[28px]
+                    p-7
+                    shadow-xl
+                    border
+                    border-white/40
+                    "
+                >
+
+                    <div className="flex justify-between items-center">
+
+                        <div>
+
+                            <p className="text-gray-500">
+                                Total Users
+                            </p>
+
+                            <h2
+                                className="
+                                text-4xl
+                                font-black
+                                text-[#2B2118]
+                                mt-2
+                                "
+                            >
+                                {totalUsers}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            className="
+                            w-16
+                            h-16
+                            rounded-2xl
+                            bg-blue-100
+                            flex
+                            items-center
+                            justify-center
+                            "
+                        >
+                            <FaUsers
+                                className="
+                                text-3xl
+                                text-blue-600
+                                "
+                            />
+                        </div>
+
+                    </div>
+
+                </motion.div>
+
+                {/* Total Lawyers */}
+
+                <motion.div
+                    whileHover={{
+                        y: -8,
+                        scale: 1.03,
+                    }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-[28px]
+                    p-7
+                    shadow-xl
+                    border
+                    border-white/40
+                    "
+                >
+
+                    <div className="flex justify-between items-center">
+
+                        <div>
+
+                            <p className="text-gray-500">
+                                Total Lawyers
+                            </p>
+
+                            <h2
+                                className="
+                                text-4xl
+                                font-black
+                                text-[#2B2118]
+                                mt-2
+                                "
+                            >
+                                {totalLawyers}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            className="
+                            w-16
+                            h-16
+                            rounded-2xl
+                            bg-amber-100
+                            flex
+                            items-center
+                            justify-center
+                            "
+                        >
+                            <FaUserTie
+                                className="
+                                text-3xl
+                                text-[#B88A44]
+                                "
+                            />
+                        </div>
+
+                    </div>
+
+                </motion.div>
+
+                {/* Total Hires */}
+
+                <motion.div
+                    whileHover={{
+                        y: -8,
+                        scale: 1.03,
+                    }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-[28px]
+                    p-7
+                    shadow-xl
+                    border
+                    border-white/40
+                    "
+                >
+
+                    <div className="flex justify-between items-center">
+
+                        <div>
+
+                            <p className="text-gray-500">
+                                Total Hires
+                            </p>
+
+                            <h2
+                                className="
+                                text-4xl
+                                font-black
+                                text-[#2B2118]
+                                mt-2
+                                "
+                            >
+                                {totalHires}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            className="
+                            w-16
+                            h-16
+                            rounded-2xl
+                            bg-green-100
+                            flex
+                            items-center
+                            justify-center
+                            "
+                        >
+                            <FaBalanceScale
+                                className="
+                                text-3xl
+                                text-green-600
+                                "
+                            />
+                        </div>
+
+                    </div>
+
+                </motion.div>
+
+                {/* Revenue */}
+
+                <motion.div
+                    whileHover={{
+                        y: -8,
+                        scale: 1.03,
+                    }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-[28px]
+                    p-7
+                    shadow-xl
+                    border
+                    border-white/40
+                    "
+                >
+
+                    <div className="flex justify-between items-center">
+
+                        <div>
+
+                            <p className="text-gray-500">
+                                Revenue
+                            </p>
+
+                            <h2
+                                className="
+                                text-4xl
+                                font-black
+                                text-[#2B2118]
+                                mt-2
+                                "
+                            >
+                                ${totalRevenue}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            className="
+                            w-16
+                            h-16
+                            rounded-2xl
+                            bg-purple-100
+                            flex
+                            items-center
+                            justify-center
+                            "
+                        >
+                            <FaMoneyBillWave
+                                className="
+                                text-3xl
+                                text-purple-600
+                                "
+                            />
+                        </div>
+
+                    </div>
+
+                </motion.div>
+
+            </div>
+
+            {/* Quick Actions */}
+
+            <div className="grid lg:grid-cols-3 gap-8 mt-10">
                 
