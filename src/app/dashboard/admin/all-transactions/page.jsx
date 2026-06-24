@@ -73,14 +73,14 @@ const AllTransactionsPage = () => {
     }
 
     const totalRevenue =
-        // transactions.reduce(
-        //     (sum, item) =>
-        //         sum +
-        //         Number(
-        //             item.fee || 0
-        //         ),
-        //     0
-        // );
+        transactions.reduce(
+            (sum, item) =>
+                sum +
+                Number(
+                    item.fee || 0
+                ),
+            0
+        );
 
     const totalTransactions =
         transactions.length;
