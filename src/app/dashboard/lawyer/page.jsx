@@ -525,3 +525,210 @@ const LawyerDashboardPage = () => {
                 </motion.div>
 
             </div>
+                        {/* Recent Activity */}
+
+            <div className="grid xl:grid-cols-2 gap-8 mb-10">
+
+                {/* Recent Consultations */}
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-3xl
+                    p-8
+                    shadow-xl
+                    border
+                    border-white/50
+                    "
+                >
+                    <div className="flex items-center justify-between mb-6">
+
+                        <h2
+                            className="
+                            text-2xl
+                            font-black
+                            text-[#2B2118]
+                            "
+                        >
+                            Recent Consultations
+                        </h2>
+
+                        <Link
+                            href="/dashboard/lawyer/my-consultations"
+                            className="
+                            text-[#B88A44]
+                            font-semibold
+                            hover:underline
+                            "
+                        >
+                            View All
+                        </Link>
+
+                    </div>
+
+                    <div className="space-y-4">
+
+                        {consultations
+                            .slice(0, 5)
+                            .map((consultation) => (
+
+                                <div
+                                    key={consultation._id}
+                                    className="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    p-4
+                                    rounded-2xl
+                                    bg-[#F8F5F0]
+                                    "
+                                >
+                                    <div>
+
+                                        <h3 className="font-bold text-[#2B2118]">
+                                            {consultation.clientName}
+                                        </h3>
+
+                                        <p className="text-gray-500 text-sm">
+                                            {new Date(
+                                                consultation.consultationDate
+                                            ).toLocaleDateString()}
+                                        </p>
+
+                                    </div>
+
+                                    <span
+                                        className={`
+                                        px-4
+                                        py-2
+                                        rounded-full
+                                        text-xs
+                                        font-semibold
+                                        ${
+                                            consultation.status === "completed"
+                                                ? "bg-green-100 text-green-700"
+                                                : consultation.status === "cancelled"
+                                                ? "bg-red-100 text-red-700"
+                                                : "bg-blue-100 text-blue-700"
+                                        }
+                                    `}
+                                    >
+                                        {consultation.status}
+                                    </span>
+
+                                </div>
+
+                            ))}
+
+                        {consultations.length === 0 && (
+                            <div className="text-center py-10">
+                                <p className="text-gray-500">
+                                    No consultations found.
+                                </p>
+                            </div>
+                        )}
+
+                    </div>
+                </motion.div>
+
+                {/* Recent Reviews */}
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-3xl
+                    p-8
+                    shadow-xl
+                    border
+                    border-white/50
+                    "
+                >
+                    <div className="flex items-center justify-between mb-6">
+
+                        <h2
+                            className="
+                            text-2xl
+                            font-black
+                            text-[#2B2118]
+                            "
+                        >
+                            Recent Reviews
+                        </h2>
+
+                        <Link
+                            href="/dashboard/lawyer/reviews"
+                            className="
+                            text-[#B88A44]
+                            font-semibold
+                            hover:underline
+                            "
+                        >
+                            View All
+                        </Link>
+
+                    </div>
+
+                    <div className="space-y-5">
+
+                        {reviews
+                            .slice(0, 4)
+                            .map((review) => (
+
+                                <div
+                                    key={review._id}
+                                    className="
+                                    p-4
+                                    rounded-2xl
+                                    bg-[#F8F5F0]
+                                    "
+                                >
+                                    <div className="flex justify-between items-center">
+
+                                        <h3 className="font-bold text-[#2B2118]">
+                                            {review.clientName}
+                                        </h3>
+
+                                        <div className="flex gap-1">
+
+                                            {[...Array(5)].map((_, i) => (
+                                                <FaStar
+                                                    key={i}
+                                                    className={
+                                                        i < review.rating
+                                                            ? "text-yellow-500"
+                                                            : "text-gray-300"
+                                                    }
+                                                />
+                                            ))}
+
+                                        </div>
+
+                                    </div>
+
+                                    <p className="text-gray-600 mt-3 line-clamp-2">
+                                        {review.comment}
+                                    </p>
+
+                                </div>
+
+                            ))}
+
+                        {reviews.length === 0 && (
+                            <div className="text-center py-10">
+                                <p className="text-gray-500">
+                                    No reviews found.
+                                </p>
+                            </div>
+                        )}
+
+                    </div>
+
+                </motion.div>
+
+            </div>
