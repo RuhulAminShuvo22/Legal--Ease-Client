@@ -454,4 +454,4 @@ const AllTransactionsPage = () => {
     );
 };
 
-// export default AllTransactionsPage;
+export default AllTransactionsPage;
