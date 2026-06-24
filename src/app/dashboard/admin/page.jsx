@@ -641,4 +641,219 @@ const AdminDashboardPage = () => {
             {/* Overview Section */}
 
             <div className="grid lg:grid-cols-2 gap-8 mt-10">
-                
+                                {/* Platform Overview */}
+
+                <motion.div
+                    initial={{
+                        opacity: 0,
+                        y: 30,
+                    }}
+                    whileInView={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+                    viewport={{
+                        once: true,
+                    }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-[32px]
+                    p-8
+                    shadow-xl
+                    border
+                    border-white/40
+                    "
+                >
+
+                    <h2
+                        className="
+                        text-2xl
+                        font-black
+                        text-[#2B2118]
+                        mb-8
+                        "
+                    >
+                        Platform Overview
+                    </h2>
+
+                    <div className="space-y-6">
+
+                        <div>
+                            <div className="flex justify-between mb-2">
+                                <span className="font-semibold">
+                                    User Growth
+                                </span>
+
+                                <span className="text-[#B88A44] font-bold">
+                                    {totalUsers}
+                                </span>
+                            </div>
+
+                            <div className="w-full h-3 rounded-full bg-gray-200 overflow-hidden">
+                                <div
+                                    className="
+                                    h-full
+                                    bg-gradient-to-r
+                                    from-blue-500
+                                    to-blue-400
+                                    rounded-full
+                                    "
+                                    style={{
+                                        width: "90%",
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="flex justify-between mb-2">
+                                <span className="font-semibold">
+                                    Lawyer Network
+                                </span>
+
+                                <span className="text-[#B88A44] font-bold">
+                                    {totalLawyers}
+                                </span>
+                            </div>
+
+                            <div className="w-full h-3 rounded-full bg-gray-200 overflow-hidden">
+                                <div
+                                    className="
+                                    h-full
+                                    bg-gradient-to-r
+                                    from-amber-500
+                                    to-yellow-400
+                                    rounded-full
+                                    "
+                                    style={{
+                                        width: "75%",
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="flex justify-between mb-2">
+                                <span className="font-semibold">
+                                    Legal Hires
+                                </span>
+
+                                <span className="text-[#B88A44] font-bold">
+                                    {totalHires}
+                                </span>
+                            </div>
+
+                            <div className="w-full h-3 rounded-full bg-gray-200 overflow-hidden">
+                                <div
+                                    className="
+                                    h-full
+                                    bg-gradient-to-r
+                                    from-green-500
+                                    to-green-400
+                                    rounded-full
+                                    "
+                                    style={{
+                                        width: "85%",
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </motion.div>
+
+                {/* Platform Status */}
+
+                <motion.div
+                    initial={{
+                        opacity: 0,
+                        y: 30,
+                    }}
+                    whileInView={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+                    viewport={{
+                        once: true,
+                    }}
+                    className="
+                    bg-gradient-to-br
+                    from-[#D4A95A]
+                    via-[#C89A48]
+                    to-[#B88A44]
+                    rounded-[32px]
+                    p-8
+                    shadow-2xl
+                    text-white
+                    "
+                >
+
+                    <h2
+                        className="
+                        text-2xl
+                        font-black
+                        mb-8
+                        "
+                    >
+                        Platform Status
+                    </h2>
+
+                    <div className="space-y-8">
+
+                        <div>
+                            <p className="opacity-80">
+                                Total Revenue
+                            </p>
+
+                            <h3 className="text-5xl font-black mt-2">
+                                ${totalRevenue}
+                            </h3>
+                        </div>
+
+                        <div className="border-t border-white/20 pt-6">
+
+                            <div className="flex justify-between mb-4">
+
+                                <span>
+                                    System Health
+                                </span>
+
+                                <span className="font-bold">
+                                    Excellent
+                                </span>
+
+                            </div>
+
+                            <div className="flex justify-between mb-4">
+
+                                <span>
+                                    Active Services
+                                </span>
+
+                                <span className="font-bold">
+                                    Online
+                                </span>
+
+                            </div>
+
+                            <div className="flex justify-between">
+
+                                <span>
+                                    Revenue Growth
+                                </span>
+
+                                <span className="font-bold">
+                                    +18%
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </motion.div>
+
+            </div>
