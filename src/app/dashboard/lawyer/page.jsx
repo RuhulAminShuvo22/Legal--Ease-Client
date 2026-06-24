@@ -283,3 +283,245 @@ const LawyerDashboardPage = () => {
                 </motion.div>
 
             </div>
+            {/* Quick Stats */}
+
+            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+
+                <motion.div
+                    whileHover={{ y: -5 }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-3xl
+                    p-6
+                    shadow-xl
+                    border
+                    border-white/50
+                    "
+                >
+                    <div className="flex items-center justify-between">
+
+                        <div>
+
+                            <p className="text-gray-500">
+                                Hiring Requests
+                            </p>
+
+                            <h2 className="text-4xl font-black text-[#2B2118] mt-2">
+                                {hirings.length}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            className="
+                            w-14
+                            h-14
+                            rounded-2xl
+                            bg-[#D4A95A]/20
+                            flex
+                            items-center
+                            justify-center
+                            "
+                        >
+                            <FaBriefcase className="text-2xl text-[#B88A44]" />
+                        </div>
+
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    whileHover={{ y: -5 }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-3xl
+                    p-6
+                    shadow-xl
+                    border
+                    border-white/50
+                    "
+                >
+                    <div className="flex items-center justify-between">
+
+                        <div>
+
+                            <p className="text-gray-500">
+                                Consultations
+                            </p>
+
+                            <h2 className="text-4xl font-black text-[#2B2118] mt-2">
+                                {consultations.length}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            className="
+                            w-14
+                            h-14
+                            rounded-2xl
+                            bg-blue-100
+                            flex
+                            items-center
+                            justify-center
+                            "
+                        >
+                            <FaCalendarCheck className="text-2xl text-blue-600" />
+                        </div>
+
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    whileHover={{ y: -5 }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-3xl
+                    p-6
+                    shadow-xl
+                    border
+                    border-white/50
+                    "
+                >
+                    <div className="flex items-center justify-between">
+
+                        <div>
+
+                            <p className="text-gray-500">
+                                Reviews
+                            </p>
+
+                            <h2 className="text-4xl font-black text-[#2B2118] mt-2">
+                                {reviews.length}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            className="
+                            w-14
+                            h-14
+                            rounded-2xl
+                            bg-yellow-100
+                            flex
+                            items-center
+                            justify-center
+                            "
+                        >
+                            <FaStar className="text-2xl text-yellow-500" />
+                        </div>
+
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    whileHover={{ y: -5 }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-3xl
+                    p-6
+                    shadow-xl
+                    border
+                    border-white/50
+                    "
+                >
+                    <div className="flex items-center justify-between">
+
+                        <div>
+
+                            <p className="text-gray-500">
+                                Clients
+                            </p>
+
+                            <h2 className="text-4xl font-black text-[#2B2118] mt-2">
+                                {clientCount}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            className="
+                            w-14
+                            h-14
+                            rounded-2xl
+                            bg-green-100
+                            flex
+                            items-center
+                            justify-center
+                            "
+                        >
+                            <FaUsers className="text-2xl text-green-600" />
+                        </div>
+
+                    </div>
+                </motion.div>
+
+            </div>
+
+            {/* Earnings + Rating */}
+
+            <div className="grid lg:grid-cols-2 gap-8 mb-10">
+
+                <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="
+                    bg-gradient-to-r
+                    from-green-500
+                    to-emerald-600
+                    rounded-3xl
+                    p-8
+                    text-white
+                    shadow-2xl
+                    "
+                >
+                    <p className="text-white/80">
+                        Total Earnings
+                    </p>
+
+                    <h2 className="text-5xl font-black mt-3">
+                        ${totalEarnings}
+                    </h2>
+
+                    <p className="mt-3 text-white/80">
+                        From accepted & paid clients
+                    </p>
+                </motion.div>
+
+                <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="
+                    bg-gradient-to-r
+                    from-[#D4A95A]
+                    to-[#B88A44]
+                    rounded-3xl
+                    p-8
+                    text-white
+                    shadow-2xl
+                    "
+                >
+                    <p className="text-white/80">
+                        Average Rating
+                    </p>
+
+                    <h2 className="text-5xl font-black mt-3">
+                        {averageRating}
+                    </h2>
+
+                    <div className="flex gap-1 mt-4">
+                        {[...Array(5)].map((_, i) => (
+                            <FaStar
+                                key={i}
+                                className={
+                                    i < Math.round(averageRating)
+                                        ? "text-yellow-300"
+                                        : "text-white/30"
+                                }
+                            />
+                        ))}
+                    </div>
+                </motion.div>
+
+            </div>
