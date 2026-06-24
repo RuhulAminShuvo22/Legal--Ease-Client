@@ -47,12 +47,12 @@ const ManageUsersPage = () => {
         }
     };
 
-    // useEffect(() => {
-    //     const loadData = async () => {
-    //         await fetchUsers();
-    //     };
-    //     loadData();
-    // }, []);
+    useEffect(() => {
+        const loadData = async () => {
+            await fetchUsers();
+        };
+        loadData();
+    }, []);
 
 
     // ==========================
