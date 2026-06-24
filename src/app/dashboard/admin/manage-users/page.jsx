@@ -122,13 +122,13 @@ const ManageUsersPage = () => {
                 u.role === "client"
         ).length;
 
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            setCurrentPage(1);
-        }, 300); // Waits 300ms after the last keystroke
+    // useEffect(() => {
+    //     const delayDebounceFn = setTimeout(() => {
+    //         setCurrentPage(1);
+    //     }, 300); // Waits 300ms after the last keystroke
 
-        return () => clearTimeout(delayDebounceFn);
-    }, [searchTerm]);
+    //     return () => clearTimeout(delayDebounceFn);
+    // }, [searchTerm]);
 
     // ==========================
     // CHANGE USER ROLE
