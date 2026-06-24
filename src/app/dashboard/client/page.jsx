@@ -308,3 +308,201 @@ const ClientDashboardPage = () => {
                 </motion.div>
 
             </div>
+            {/* QUICK ACTIONS */}
+
+            <div className="grid lg:grid-cols-3 gap-6 mb-10">
+
+                <Link
+                    href="/dashboard/client/hiring-history"
+                >
+                    <motion.div
+                        whileHover={{
+                            y: -8,
+                            scale: 1.02,
+                        }}
+                        className="
+                        bg-white
+                        rounded-3xl
+                        p-7
+                        shadow-lg
+                        hover:shadow-2xl
+                        border
+                        border-[#F3E3C7]
+                        cursor-pointer
+                        "
+                    >
+                        <FaGavel
+                            className="
+                            text-5xl
+                            text-[#B88A44]
+                            mb-5
+                            "
+                        />
+
+                        <h3 className="text-2xl font-bold text-[#2B2118]">
+                            Hiring History
+                        </h3>
+
+                        <p className="text-gray-500 mt-2">
+                            View all lawyer hiring requests.
+                        </p>
+
+                        <div className="mt-5 flex items-center gap-2 text-[#B88A44] font-semibold">
+                            Open
+                            <FaArrowRight />
+                        </div>
+                    </motion.div>
+                </Link>
+
+                <Link
+                    href="/dashboard/client/my-consultations"
+                >
+                    <motion.div
+                        whileHover={{
+                            y: -8,
+                            scale: 1.02,
+                        }}
+                        className="
+                        bg-white
+                        rounded-3xl
+                        p-7
+                        shadow-lg
+                        hover:shadow-2xl
+                        border
+                        border-[#F3E3C7]
+                        cursor-pointer
+                        "
+                    >
+                        <FaCalendarCheck
+                            className="
+                            text-5xl
+                            text-blue-500
+                            mb-5
+                            "
+                        />
+
+                        <h3 className="text-2xl font-bold text-[#2B2118]">
+                            Consultations
+                        </h3>
+
+                        <p className="text-gray-500 mt-2">
+                            Manage your booked consultations.
+                        </p>
+
+                        <div className="mt-5 flex items-center gap-2 text-[#B88A44] font-semibold">
+                            Open
+                            <FaArrowRight />
+                        </div>
+                    </motion.div>
+                </Link>
+
+                <Link
+                    href="/dashboard/client/comments"
+                >
+                    <motion.div
+                        whileHover={{
+                            y: -8,
+                            scale: 1.02,
+                        }}
+                        className="
+                        bg-white
+                        rounded-3xl
+                        p-7
+                        shadow-lg
+                        hover:shadow-2xl
+                        border
+                        border-[#F3E3C7]
+                        cursor-pointer
+                        "
+                    >
+                        <FaCommentDots
+                            className="
+                            text-5xl
+                            text-yellow-500
+                            mb-5
+                            "
+                        />
+
+                        <h3 className="text-2xl font-bold text-[#2B2118]">
+                            My Reviews
+                        </h3>
+
+                        <p className="text-gray-500 mt-2">
+                            View and manage your reviews.
+                        </p>
+
+                        <div className="mt-5 flex items-center gap-2 text-[#B88A44] font-semibold">
+                            Open
+                            <FaArrowRight />
+                        </div>
+                    </motion.div>
+                </Link>
+
+            </div>
+
+            {/* RECENT OVERVIEW */}
+
+            <div className="grid lg:grid-cols-2 gap-8 mb-10">
+
+                <motion.div
+                    initial={{
+                        opacity: 0,
+                        y: 20,
+                    }}
+                    animate={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+                    className="
+                    bg-white
+                    rounded-3xl
+                    p-7
+                    shadow-xl
+                    border
+                    border-[#F3E3C7]
+                    "
+                >
+                    <h2 className="text-2xl font-bold text-[#2B2118] mb-6">
+                        Recent Consultations
+                    </h2>
+
+                    <div className="space-y-4">
+                        {consultations
+                            .slice(0, 3)
+                            .map(
+                                (
+                                    item
+                                ) => (
+                                    <div
+                                        key={
+                                            item._id
+                                        }
+                                        className="
+                                        flex
+                                        justify-between
+                                        items-center
+                                        p-4
+                                        rounded-2xl
+                                        bg-[#FAF7F1]
+                                        "
+                                    >
+                                        <div>
+                                            <h4 className="font-semibold">
+                                                {
+                                                    item.lawyerName
+                                                }
+                                            </h4>
+
+                                            <p className="text-sm text-gray-500">
+                                                {
+                                                    item.status
+                                                }
+                                            </p>
+                                        </div>
+
+                                        <FaArrowRight />
+                                    </div>
+                                )
+                            )}
+                    </div>
+                </motion.div>
