@@ -1,193 +1,325 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { authClient } from "@/lib/auth-client";
 import { motion } from "framer-motion";
+
 import {
-  Users,
-  Phone,
-  Mail,
-  ArrowRight,
-} from "lucide-react";
+  FaUsers,
+  FaEnvelope,
+  FaPhone,
+  FaUserTie,
+} from "react-icons/fa";
 
-export default function MyClientsPage() {
-  const clients = [
-    {
-      id: 1,
-      name: "Rahim Ahmed",
-      email: "rahim@gmail.com",
-      phone: "+8801712345678",
-      caseType: "Family Law",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Karim Hasan",
-      email: "karim@gmail.com",
-      phone: "+8801812345678",
-      caseType: "Property Law",
-      status: "Active",
-    },
-    {
-      id: 3,
-      name: "Nadia Akter",
-      email: "nadia@gmail.com",
-      phone: "+8801912345678",
-      caseType: "Civil Law",
-      status: "Pending",
-    },
-  ];
+const MyClientsPage = () => {
+  const { data: session } =
+    authClient.useSession();
 
+  const user = session?.user;
+
+  const [clients, setClients] =
+    useState([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  useEffect(() => {
+    const fetchClients =
+      async () => {
+        if (!user?.email) return;
+
+        try {
+          const res =
+            await axios.get(
+              `http://localhost:5000/clients/lawyer/${user.email}`
+            );
+
+          setClients(res.data);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+    fetchClients();
+  }, [user]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div
+          className="
+                    w-16
+                    h-16
+                    border-4
+                    border-[#D4A95A]
+                    border-t-transparent
+                    rounded-full
+                    animate-spin
+                    "
+        />
+      </div>
+    );
+  }
   return (
-    <div className="space-y-8">
+    <div className="min-h-screen bg-[#F7F3EE] p-6 md:p-10">
+
       {/* Header */}
 
       <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="rounded-[30px] bg-gradient-to-r from-[#D4A95A] to-[#B88746] p-8 text-white shadow-xl"
+        initial={{
+          opacity: 0,
+          y: -20,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        className="mb-10"
       >
-        <div className="flex items-center gap-4">
-          <div className="rounded-2xl bg-white/20 p-4">
-            <Users size={35} />
-          </div>
+        <h1 className="text-4xl md:text-5xl font-bold text-[#2B2118]">
+          My Clients
+        </h1>
 
-          <div>
-            <h1 className="text-4xl font-bold">
-              My Clients
-            </h1>
+        <p className="text-gray-500 mt-3">
+          View and manage all your active clients.
+        </p>
 
-            <p className="mt-2 text-white/90">
-              Manage all your active and pending clients.
-            </p>
-          </div>
-        </div>
       </motion.div>
 
-      {/* Stats */}
-
-      <div className="grid gap-6 md:grid-cols-3">
-        <div className="rounded-3xl border border-[#EADCC7] bg-white p-6 shadow-sm">
-          <h3 className="text-gray-500">
-            Total Clients
-          </h3>
-
-          <p className="mt-2 text-4xl font-bold text-[#B88746]">
-            24
-          </p>
-        </div>
-
-        <div className="rounded-3xl border border-[#EADCC7] bg-white p-6 shadow-sm">
-          <h3 className="text-gray-500">
-            Active Clients
-          </h3>
-
-          <p className="mt-2 text-4xl font-bold text-green-600">
-            18
-          </p>
-        </div>
-
-        <div className="rounded-3xl border border-[#EADCC7] bg-white p-6 shadow-sm">
-          <h3 className="text-gray-500">
-            Pending Clients
-          </h3>
-
-          <p className="mt-2 text-4xl font-bold text-orange-500">
-            6
-          </p>
-        </div>
-      </div>
-
-      {/* Clients List */}
+      {/* Stats Card */}
 
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="rounded-[30px] border border-[#EADCC7] bg-white p-6 shadow-sm"
+        initial={{
+          opacity: 0,
+          scale: 0.95,
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+        }}
+        className="
+                bg-gradient-to-r
+                from-[#D4A95A]
+                via-[#C89A48]
+                to-[#B88A44]
+                rounded-3xl
+                p-8
+                text-white
+                shadow-2xl
+                mb-10
+                "
       >
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-[#3B2F1E]">
-            Client List
+        <div className="flex items-center gap-5">
+
+          <FaUsers className="text-5xl" />
+
+          <div>
+
+            <h2 className="text-4xl font-bold">
+              {clients.length}
+            </h2>
+
+            <p className="opacity-90">
+              Total Active Clients
+            </p>
+
+          </div>
+
+        </div>
+
+      </motion.div>
+
+      {/* Empty State */}
+
+      {clients.length === 0 ? (
+
+        <div
+          className="
+                    bg-white
+                    rounded-3xl
+                    p-12
+                    shadow-lg
+                    text-center
+                    "
+        >
+
+          <FaUserTie
+            className="
+                        text-6xl
+                        text-[#D4A95A]
+                        mx-auto
+                        mb-5
+                        "
+          />
+
+          <h2 className="text-3xl font-bold">
+            No Clients Found
           </h2>
 
-          <button className="font-semibold text-[#B88746]">
-            View All
-          </button>
+          <p className="text-gray-500 mt-3">
+            You do not have any active clients yet.
+          </p>
+
         </div>
 
-        <div className="space-y-5">
-          {clients.map((client, index) => (
-            <motion.div
-              key={client.id}
-              initial={{
-                opacity: 0,
-                y: 15,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                delay: index * 0.1,
-              }}
-              whileHover={{
-                y: -3,
-              }}
-              className="rounded-3xl border border-[#F1E7D8] bg-[#FCFAF7] p-5"
-            >
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-[#3B2F1E]">
-                    {client.name}
-                  </h3>
+      ) : (
 
-                  <p className="mt-1 text-sm text-gray-500">
-                    {client.caseType}
-                  </p>
-                </div>
+        <div className="grid lg:grid-cols-2 gap-8">
+          {clients.map(
+            (
+              client,
+              index
+            ) => (
 
-                <div className="flex flex-col gap-2 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <Mail size={15} />
-                    {client.email}
+              <motion.div
+                key={client._id}
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay:
+                    index * 0.1,
+                }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.02,
+                }}
+                className="
+                                bg-white
+                                rounded-3xl
+                                overflow-hidden
+                                shadow-lg
+                                hover:shadow-2xl
+                                border
+                                border-[#F3E3C7]
+                                transition-all
+                                duration-500
+                                "
+              >
+
+                <div
+                  className="
+                                    h-1
+                                    bg-gradient-to-r
+                                    from-[#D4A95A]
+                                    to-[#B88A44]
+                                    "
+                />
+
+                <div className="p-7">
+
+                  <div className="flex items-center gap-4 mb-6">
+
+                    <div
+                      className="
+                                            w-16
+                                            h-16
+                                            rounded-2xl
+                                            bg-gradient-to-r
+                                            from-[#D4A95A]
+                                            to-[#B88A44]
+                                            flex
+                                            items-center
+                                            justify-center
+                                            text-white
+                                            shadow-lg
+                                            "
+                    >
+                      <FaUserTie size={22} />
+                    </div>
+
+                    <div>
+
+                      <h2
+                        className="
+                                                text-2xl
+                                                font-bold
+                                                text-[#2B2118]
+                                                "
+                      >
+                        {
+                          client.clientName
+                        }
+                      </h2>
+
+                      <p className="text-gray-500">
+                        Client
+                      </p>
+
+                    </div>
+
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <Phone size={15} />
-                    {client.phone}
+                  <div className="space-y-4">
+
+                    <div className="flex items-center gap-3">
+
+                      <FaEnvelope className="text-[#B88A44]" />
+
+                      <span>
+                        {
+                          client.clientEmail
+                        }
+                      </span>
+
+                    </div>
+
+                    {client.clientPhone && (
+
+                      <div className="flex items-center gap-3">
+
+                        <FaPhone className="text-[#B88A44]" />
+
+                        <span>
+                          {
+                            client.clientPhone
+                          }
+                        </span>
+
+                      </div>
+
+                    )}
+
                   </div>
-                </div>
 
-                <div className="flex items-center gap-4">
-                  <span
-                    className={`rounded-full px-4 py-2 text-sm font-medium ${
-                      client.status === "Active"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-orange-100 text-orange-700"
-                    }`}
-                  >
-                    {client.status}
-                  </span>
-
-                  <button
+                  <div
                     className="
-                      flex items-center gap-2
-                      rounded-xl
-                      bg-[#D4A95A]
-                      px-4
-                      py-2
-                      text-white
-                      transition
-                      hover:bg-[#B88746]
-                    "
+                                        mt-6
+                                        pt-4
+                                        border-t
+                                        border-[#F3E3C7]
+                                        text-sm
+                                        text-gray-500
+                                        "
                   >
-                    Details
-                    <ArrowRight size={16} />
-                  </button>
+                    Client Since:{" "}
+                    {new Date(
+                      client.createdAt
+                    ).toLocaleDateString()}
+                  </div>
+
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+              </motion.div>
+
+            )
+          )}
+
         </div>
-      </motion.div>
+
+      )}
+
     </div>
   );
-}
+};
+
+export default MyClientsPage;
