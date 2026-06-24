@@ -152,7 +152,7 @@ const AdminDashboardPage = () => {
             {/* Stats Grid */}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-                                {/* Total Users */}
+                {/* Total Users */}
 
                 <motion.div
                     whileHover={{
@@ -405,7 +405,7 @@ const AdminDashboardPage = () => {
             {/* Quick Actions */}
 
             <div className="grid lg:grid-cols-3 gap-8 mt-10">
-                                {/* Manage Users */}
+                {/* Manage Users */}
 
                 <motion.div
                     whileHover={{
@@ -641,7 +641,7 @@ const AdminDashboardPage = () => {
             {/* Overview Section */}
 
             <div className="grid lg:grid-cols-2 gap-8 mt-10">
-                                {/* Platform Overview */}
+                {/* Platform Overview */}
 
                 <motion.div
                     initial={{
@@ -857,3 +857,9 @@ const AdminDashboardPage = () => {
                 </motion.div>
 
             </div>
+        </div>
+
+    );
+};
+
+export default AdminDashboardPage;
