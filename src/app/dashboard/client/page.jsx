@@ -701,3 +701,121 @@ const ClientDashboardPage = () => {
                 </div>
 
             </motion.div>
+            {/* QUICK ACTIONS */}
+
+            <motion.div
+                initial={{
+                    opacity: 0,
+                    y: 30,
+                }}
+                animate={{
+                    opacity: 1,
+                    y: 0,
+                }}
+                transition={{
+                    duration: 0.7,
+                }}
+                className="
+                bg-gradient-to-r
+                from-[#D4A95A]
+                via-[#C89A48]
+                to-[#B88A44]
+                rounded-[35px]
+                p-10
+                shadow-2xl
+                text-white
+                overflow-hidden
+                relative
+                "
+            >
+                <div className="relative z-10">
+
+                    <h2 className="text-4xl font-black mb-3">
+                        Need Legal Help?
+                    </h2>
+
+                    <p className="text-white/90 text-lg mb-8">
+                        Explore lawyers, schedule consultations,
+                        and manage your legal services effortlessly.
+                    </p>
+
+                    <div className="flex flex-wrap gap-4">
+
+                        <Link href="/lawyers">
+                            <motion.button
+                                whileHover={{
+                                    scale: 1.05,
+                                }}
+                                whileTap={{
+                                    scale: 0.95,
+                                }}
+                                className="
+                                px-8
+                                py-4
+                                rounded-2xl
+                                bg-white
+                                text-[#B88A44]
+                                font-bold
+                                shadow-lg
+                                "
+                            >
+                                Find Lawyers
+                            </motion.button>
+                        </Link>
+
+                        <Link href="/dashboard/client/my-consultations">
+                            <motion.button
+                                whileHover={{
+                                    scale: 1.05,
+                                }}
+                                whileTap={{
+                                    scale: 0.95,
+                                }}
+                                className="
+                                px-8
+                                py-4
+                                rounded-2xl
+                                border-2
+                                border-white
+                                text-white
+                                font-bold
+                                "
+                            >
+                                My Consultations
+                            </motion.button>
+                        </Link>
+
+                    </div>
+
+                </div>
+
+                <div
+                    className="
+                    absolute
+                    -right-10
+                    -bottom-10
+                    w-52
+                    h-52
+                    rounded-full
+                    bg-white/10
+                    "
+                />
+
+                <div
+                    className="
+                    absolute
+                    right-20
+                    top-10
+                    w-24
+                    h-24
+                    rounded-full
+                    bg-white/10
+                    "
+                />
+            </motion.div>
+
+        </div>
+    );
+};
+
+export default ClientDashboardPage;//
