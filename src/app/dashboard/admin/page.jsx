@@ -840,13 +840,13 @@ const AdminDashboardPage = () => {
 
                             <div className="flex justify-between">
 
-                                <span>
+                                {/* <span>
                                     Revenue Growth
                                 </span>
 
                                 <span className="font-bold">
                                     +18%
-                                </span>
+                                </span> */}
 
                             </div>
 
