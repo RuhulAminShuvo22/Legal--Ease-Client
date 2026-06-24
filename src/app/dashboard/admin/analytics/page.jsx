@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-// import {
-//     FaUsers,
-//     FaUserTie,
-//     FaBalanceScale,
-//     FaMoneyBillWave,
-// } from "react-icons/fa";
+import {
+    FaUsers,
+    FaUserTie,
+    FaBalanceScale,
+    FaMoneyBillWave,
+} from "react-icons/fa";
 
 const AdminAnalyticsPage = () => {
 
