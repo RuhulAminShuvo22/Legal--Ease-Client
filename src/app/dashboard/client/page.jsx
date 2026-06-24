@@ -506,3 +506,198 @@ const ClientDashboardPage = () => {
                             )}
                     </div>
                 </motion.div>
+                <motion.div
+                    initial={{
+                        opacity: 0,
+                        y: 20,
+                    }}
+                    animate={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+                    className="
+                    bg-white
+                    rounded-3xl
+                    p-7
+                    shadow-xl
+                    border
+                    border-[#F3E3C7]
+                    "
+                >
+                    <h2 className="text-2xl font-bold text-[#2B2118] mb-6">
+                        Recent Reviews
+                    </h2>
+
+                    <div className="space-y-4">
+                        {reviews
+                            .slice(0, 3)
+                            .map(
+                                (
+                                    review
+                                ) => (
+                                    <div
+                                        key={
+                                            review._id
+                                        }
+                                        className="
+                                        p-4
+                                        rounded-2xl
+                                        bg-[#FAF7F1]
+                                        "
+                                    >
+                                        <div className="flex justify-between items-center">
+
+                                            <h4 className="font-semibold">
+                                                {
+                                                    review.lawyerName
+                                                }
+                                            </h4>
+
+                                            <div className="flex gap-1">
+                                                {[...Array(
+                                                    Number(
+                                                        review.rating
+                                                    )
+                                                )].map(
+                                                    (
+                                                        _,
+                                                        i
+                                                    ) => (
+                                                        <FaStar
+                                                            key={
+                                                                i
+                                                            }
+                                                            className="text-yellow-500"
+                                                        />
+                                                    )
+                                                )}
+                                            </div>
+
+                                        </div>
+
+                                        <p className="text-sm text-gray-500 mt-2 line-clamp-2">
+                                            {
+                                                review.comment
+                                            }
+                                        </p>
+                                    </div>
+                                )
+                            )}
+
+                        {reviews.length ===
+                            0 && (
+                                <div
+                                    className="
+                                text-center
+                                py-10
+                                text-gray-500
+                                "
+                                >
+                                    No reviews found
+                                </div>
+                            )}
+                    </div>
+                </motion.div>
+
+            </div>
+
+            {/* CLIENT ACTIVITY */}
+
+            <motion.div
+                initial={{
+                    opacity: 0,
+                    y: 30,
+                }}
+                animate={{
+                    opacity: 1,
+                    y: 0,
+                }}
+                transition={{
+                    duration: 0.6,
+                }}
+                className="
+                bg-white
+                rounded-[35px]
+                p-8
+                shadow-xl
+                border
+                border-[#F3E3C7]
+                mb-10
+                "
+            >
+                <div className="flex items-center justify-between mb-8">
+
+                    <div>
+                        <h2 className="text-3xl font-black text-[#2B2118]">
+                            Activity Summary
+                        </h2>
+
+                        <p className="text-gray-500 mt-2">
+                            Overview of your legal journey
+                        </p>
+                    </div>
+
+                    <FaBalanceScale
+                        className="
+                        text-5xl
+                        text-[#D4A95A]
+                        "
+                    />
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+
+                    <div
+                        className="
+                        bg-[#FAF7F1]
+                        rounded-3xl
+                        p-6
+                        text-center
+                        "
+                    >
+                        <h3 className="text-5xl font-black text-[#B88A44]">
+                            {hirings.length}
+                        </h3>
+
+                        <p className="mt-3 text-gray-600">
+                            Lawyers Contacted
+                        </p>
+                    </div>
+
+                    <div
+                        className="
+                        bg-[#FAF7F1]
+                        rounded-3xl
+                        p-6
+                        text-center
+                        "
+                    >
+                        <h3 className="text-5xl font-black text-green-600">
+                            {completedConsultations}
+                        </h3>
+
+                        <p className="mt-3 text-gray-600">
+                            Cases Completed
+                        </p>
+                    </div>
+
+                    <div
+                        className="
+                        bg-[#FAF7F1]
+                        rounded-3xl
+                        p-6
+                        text-center
+                        "
+                    >
+                        <h3 className="text-5xl font-black text-yellow-500">
+                            {reviews.length}
+                        </h3>
+
+                        <p className="mt-3 text-gray-600">
+                            Reviews Submitted
+                        </p>
+                    </div>
+
+                </div>
+
+            </motion.div>
