@@ -405,4 +405,240 @@ const AdminDashboardPage = () => {
             {/* Quick Actions */}
 
             <div className="grid lg:grid-cols-3 gap-8 mt-10">
+                                {/* Manage Users */}
+
+                <motion.div
+                    whileHover={{
+                        y: -10,
+                        scale: 1.02,
+                    }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-[32px]
+                    p-8
+                    shadow-xl
+                    border
+                    border-white/40
+                    "
+                >
+
+                    <div
+                        className="
+                        w-16
+                        h-16
+                        rounded-2xl
+                        bg-blue-100
+                        flex
+                        items-center
+                        justify-center
+                        mb-6
+                        "
+                    >
+                        <FaUsers
+                            className="
+                            text-3xl
+                            text-blue-600
+                            "
+                        />
+                    </div>
+
+                    <h2
+                        className="
+                        text-2xl
+                        font-black
+                        text-[#2B2118]
+                        "
+                    >
+                        Manage Users
+                    </h2>
+
+                    <p
+                        className="
+                        text-gray-500
+                        mt-3
+                        mb-6
+                        "
+                    >
+                        Change user roles, remove users
+                        and control platform access.
+                    </p>
+
+                    <Link
+                        href="/dashboard/admin/manage-users"
+                        className="
+                        inline-flex
+                        items-center
+                        gap-3
+                        text-[#B88A44]
+                        font-bold
+                        hover:gap-4
+                        transition-all
+                        "
+                    >
+                        Open Page
+                        <FaArrowRight />
+                    </Link>
+
+                </motion.div>
+
+                {/* Transactions */}
+
+                <motion.div
+                    whileHover={{
+                        y: -10,
+                        scale: 1.02,
+                    }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-[32px]
+                    p-8
+                    shadow-xl
+                    border
+                    border-white/40
+                    "
+                >
+
+                    <div
+                        className="
+                        w-16
+                        h-16
+                        rounded-2xl
+                        bg-green-100
+                        flex
+                        items-center
+                        justify-center
+                        mb-6
+                        "
+                    >
+                        <FaMoneyBillWave
+                            className="
+                            text-3xl
+                            text-green-600
+                            "
+                        />
+                    </div>
+
+                    <h2
+                        className="
+                        text-2xl
+                        font-black
+                        text-[#2B2118]
+                        "
+                    >
+                        Transactions
+                    </h2>
+
+                    <p
+                        className="
+                        text-gray-500
+                        mt-3
+                        mb-6
+                        "
+                    >
+                        View all successful payments,
+                        revenues and financial records.
+                    </p>
+
+                    <Link
+                        href="/dashboard/admin/all-transactions"
+                        className="
+                        inline-flex
+                        items-center
+                        gap-3
+                        text-[#B88A44]
+                        font-bold
+                        hover:gap-4
+                        transition-all
+                        "
+                    >
+                        Open Page
+                        <FaArrowRight />
+                    </Link>
+
+                </motion.div>
+
+                {/* Analytics */}
+
+                <motion.div
+                    whileHover={{
+                        y: -10,
+                        scale: 1.02,
+                    }}
+                    className="
+                    bg-white/80
+                    backdrop-blur-xl
+                    rounded-[32px]
+                    p-8
+                    shadow-xl
+                    border
+                    border-white/40
+                    "
+                >
+
+                    <div
+                        className="
+                        w-16
+                        h-16
+                        rounded-2xl
+                        bg-purple-100
+                        flex
+                        items-center
+                        justify-center
+                        mb-6
+                        "
+                    >
+                        <FaChartLine
+                            className="
+                            text-3xl
+                            text-purple-600
+                            "
+                        />
+                    </div>
+
+                    <h2
+                        className="
+                        text-2xl
+                        font-black
+                        text-[#2B2118]
+                        "
+                    >
+                        Analytics
+                    </h2>
+
+                    <p
+                        className="
+                        text-gray-500
+                        mt-3
+                        mb-6
+                        "
+                    >
+                        Platform statistics, growth,
+                        revenue and performance overview.
+                    </p>
+
+                    <Link
+                        href="/dashboard/admin/analytics"
+                        className="
+                        inline-flex
+                        items-center
+                        gap-3
+                        text-[#B88A44]
+                        font-bold
+                        hover:gap-4
+                        transition-all
+                        "
+                    >
+                        Open Page
+                        <FaArrowRight />
+                    </Link>
+
+                </motion.div>
+
+            </div>
+
+            {/* Overview Section */}
+
+            <div className="grid lg:grid-cols-2 gap-8 mt-10">
                 
