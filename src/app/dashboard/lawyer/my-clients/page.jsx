@@ -32,7 +32,7 @@ const MyClientsPage = () => {
         try {
           const res =
             await axios.get(
-              `http://localhost:5000/clients/lawyer/${user.email}`
+              `${process.env.NEXT_PUBLIC_SERVER_URL}/clients/lawyer/${user.email}`
             );
 
           setClients(res.data);

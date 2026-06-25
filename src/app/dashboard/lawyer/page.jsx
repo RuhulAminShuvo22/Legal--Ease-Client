@@ -37,7 +37,7 @@ const LawyerDashboardPage = () => {
                 try {
                     const res =
                         await axios.get(
-                            `http://localhost:5000/lawyer-dashboard/${user.email}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/lawyer-dashboard/${user.email}`
                         );
 
                     setDashboardData(

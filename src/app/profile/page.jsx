@@ -34,7 +34,7 @@ export default function ProfilePage() {
                     session.data.user;
 
                 const res = await fetch(
-                    `http://localhost:5000/users/${currentUser.email}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${currentUser.email}`
                 );
 
                 const data =
@@ -70,7 +70,7 @@ export default function ProfilePage() {
     const handleUpdate = async () => {
         try {
             const res = await fetch(
-                `http://localhost:5000/users/${user.email}`,
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${user.email}`,
                 {
                     method: "PUT",
                     headers: {

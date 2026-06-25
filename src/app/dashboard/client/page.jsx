@@ -47,13 +47,13 @@ const ClientDashboardPage = () => {
                         reviewsRes,
                     ] = await Promise.all([
                         axios.get(
-                            `http://localhost:5000/hirings/client/${user.email}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/client/${user.email}`
                         ),
                         axios.get(
-                            `http://localhost:5000/consultations/client/${user.email}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/consultations/client/${user.email}`
                         ),
                         axios.get(
-                            `http://localhost:5000/reviews/client/${user.email}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/client/${user.email}`
                         ),
                     ]);
 

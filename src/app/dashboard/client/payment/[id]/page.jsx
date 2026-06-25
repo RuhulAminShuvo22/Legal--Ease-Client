@@ -29,7 +29,7 @@ const PaymentPage = () => {
     const fetchHiring = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/hirings/${id}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/${id}`
         );
 
         const data = await res.json();

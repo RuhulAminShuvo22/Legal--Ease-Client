@@ -31,7 +31,7 @@ const AdminDashboardPage = () => {
 
                     const res =
                         await axios.get(
-                            "http://localhost:5000/admin/analytics"
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/analytics`
                         );
 
                     setAnalytics(

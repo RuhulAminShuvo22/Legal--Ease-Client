@@ -46,7 +46,7 @@ const UpdateProfilePage = () => {
                 try {
                     const res =
                         await axios.get(
-                            `http://localhost:5000/users/${user.email}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${user.email}`
                         );
 
                     setFormData({
@@ -92,7 +92,7 @@ const UpdateProfilePage = () => {
             try {
                 const res =
                     await axios.put(
-                        `http://localhost:5000/users/${user.email}`,
+                        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${user.email}`,
                         {
                             name:
                                 formData.name,

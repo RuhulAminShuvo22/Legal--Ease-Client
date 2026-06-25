@@ -36,7 +36,7 @@ const LawyerDetailsPage = () => {
         const fetchLawyer = async () => {
             try {
                 const res = await fetch(
-                    `http://localhost:5000/lawyers/${id}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/lawyers/${id}`
                 );
 
                 const data =
@@ -97,7 +97,7 @@ const LawyerDetailsPage = () => {
 
             try {
                 await axios.post(
-                    "http://localhost:5000/hirings",
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings`,
                     hiringData
                 );
 
@@ -138,7 +138,7 @@ const LawyerDetailsPage = () => {
 
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/hirings/client/${user.email}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/client/${user.email}`
                 );
 
                 const hirings = res.data;

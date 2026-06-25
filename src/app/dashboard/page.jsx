@@ -20,7 +20,7 @@ export default function DashboardPage() {
                 const email = session.data.user.email;
 
                 const res = await fetch(
-                    `http://localhost:5000/users/${email}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${email}`
                 );
 
                 if (!res.ok) {

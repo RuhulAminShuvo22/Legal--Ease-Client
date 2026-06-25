@@ -32,7 +32,7 @@ const ManageLegalProfile = () => {
 
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/lawyers/email/${user.email}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/lawyers/email/${user.email}`
                 );
 
                 if (res.data) {
@@ -73,7 +73,7 @@ const ManageLegalProfile = () => {
         try {
             if (profile?._id) {
                 await axios.put(
-                    `http://localhost:5000/lawyers/${profile._id}`,
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/lawyers/${profile._id}`,
                     lawyerData
                 );
 
@@ -91,7 +91,7 @@ const ManageLegalProfile = () => {
                 });
             } else {
                 const res = await axios.post(
-                    "http://localhost:5000/lawyers",
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/lawyers`,
                     lawyerData
                 );
 

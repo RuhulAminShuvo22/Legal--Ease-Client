@@ -31,7 +31,7 @@ const LawyerHiringHistoryPage = () => {
 
             try {
                 const res = await fetch(
-                    `http://localhost:5000/hirings/lawyer/${lawyerEmail}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/lawyer/${lawyerEmail}`
                 );
 
                 const data =
@@ -55,8 +55,8 @@ const LawyerHiringHistoryPage = () => {
         try {
             const endpoint =
                 status === "accepted"
-                    ? `http://localhost:5000/hirings/accept/${id}`
-                    : `http://localhost:5000/hirings/reject/${id}`;
+                    ? `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/accept/${id}`
+                    : `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/reject/${id}`;
 
             const res = await fetch(
                 endpoint,

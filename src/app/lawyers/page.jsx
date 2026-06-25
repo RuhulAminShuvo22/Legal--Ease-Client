@@ -21,7 +21,7 @@ export default function BrowseLawyersPage() {
         const fetchLawyers = async () => {
             try {
                 const res = await fetch(
-                    "http://localhost:5000/lawyers"
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/lawyers`
                 );
 
                 const data = await res.json();

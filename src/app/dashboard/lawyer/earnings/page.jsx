@@ -34,7 +34,7 @@ const EarningsPage = () => {
         try {
           const res =
             await axios.get(
-              `http://localhost:5000/earnings/lawyer/${user.email}`
+              `${process.env.NEXT_PUBLIC_SERVER_URL}/earnings/lawyer/${user.email}`
             );
 
           setEarningsData(

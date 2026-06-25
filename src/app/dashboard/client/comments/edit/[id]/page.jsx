@@ -29,7 +29,7 @@ const EditReviewPage = () => {
                 try {
                     const res =
                         await axios.get(
-                            `http://localhost:5000/reviews/${id}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/${id}`
                         );
 
 
@@ -64,7 +64,7 @@ const EditReviewPage = () => {
             try {
                 const res =
                     await axios.patch(
-                        `http://localhost:5000/reviews/${id}`,
+                        `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/${id}`,
                         {
                             rating,
                             comment,

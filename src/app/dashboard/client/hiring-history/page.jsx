@@ -36,7 +36,7 @@ const HiringHistoryPage = () => {
 
             try {
                 const res = await fetch(
-                    `http://localhost:5000/hirings/client/${email}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/client/${email}`
                 );
 
                 const data =

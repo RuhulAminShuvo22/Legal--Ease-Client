@@ -25,7 +25,7 @@ const LawyerReviewsPage = () => {
             if (!user?.email) return;
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/reviews/lawyer/${user.email}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/lawyer/${user.email}`
                 );
 
                 setReviews(res.data || []);

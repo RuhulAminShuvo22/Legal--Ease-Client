@@ -44,7 +44,7 @@ const CheckoutForm = ({
 
             const intentRes =
                 await fetch(
-                    "http://localhost:5000/create-payment-intent",
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/create-payment-intent`,
                     {
                         method: "POST",
                         headers: {
@@ -98,7 +98,7 @@ const CheckoutForm = ({
                 "succeeded"
             ) {
                 await fetch(
-                    `http://localhost:5000/hirings/payment/${id}`,
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/payment/${id}`,
                     {
                         method: "PATCH",
                     }

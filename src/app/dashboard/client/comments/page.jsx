@@ -36,7 +36,7 @@ const ClientCommentsPage = () => {
                 try {
                     const res =
                         await axios.get(
-                            `http://localhost:5000/reviews/client/${user.email}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/client/${user.email}`
                         );
 
                     setReviews(res.data);
@@ -75,7 +75,7 @@ const ClientCommentsPage = () => {
             try {
                 const res =
                     await axios.delete(
-                        `http://localhost:5000/reviews/${id}`
+                        `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews/${id}`
                     );
 
                 if (

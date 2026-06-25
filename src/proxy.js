@@ -9,95 +9,34 @@ export async function proxy(request) {
 
     const pathname = request.nextUrl.pathname;
 
-    // Logged-in users cannot access login/register
+    // Logged-in users can't visit login/register
 
-    if (
-      session &&
-      (pathname === "/login" ||
-        pathname === "/register")
-    ) {
-      return NextResponse.redirect(
-        new URL("/", request.url)
-      );
+    if (session && (pathname === "/login" || pathname === "/register")) {
+      return NextResponse.redirect(new URL("/", request.url));
     }
 
-    // Protected Routes
+    // Protected routes
 
-    const protectedRoutes = [
-      "/dashboard",
-      "/lawyers",
-    ];
+    const protectedRoutes = ["/dashboard", "/lawyers"];
 
-    const isProtected =
-      protectedRoutes.some((route) =>
-        pathname.startsWith(route)
-      );
+    const isProtected = protectedRoutes.some((route) =>
+      pathname.startsWith(route),
+    );
 
-    // Not Logged In
+    // Not logged in
 
     if (!session && isProtected) {
-      return NextResponse.redirect(
-        new URL("/login", request.url)
-      );
+      return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    // If not logged in and route is public
-
+    // Skip role check if user not logged in
     if (!session) {
       return NextResponse.next();
     }
 
-    // Role Protection
-
-    const role =
-      session?.user?.role ||
-      session?.data?.user?.role;
-
-    // Client Dashboard
-
-    if (
-      pathname.startsWith(
-        "/dashboard/client"
-      ) &&
-      role !== "client"
-    ) {
-      return NextResponse.redirect(
-        new URL("/", request.url)
-      );
-    }
-
-    // Lawyer Dashboard
-
-    if (
-      pathname.startsWith(
-        "/dashboard/lawyer"
-      ) &&
-      role !== "lawyer"
-    ) {
-      return NextResponse.redirect(
-        new URL("/", request.url)
-      );
-    }
-
-    // Admin Dashboard
-
-    if (
-      pathname.startsWith(
-        "/dashboard/admin"
-      ) &&
-      role !== "admin"
-    ) {
-      return NextResponse.redirect(
-        new URL("/", request.url)
-      );
-    }
-
     return NextResponse.next();
   } catch (error) {
-    console.error(
-      "Proxy Error:",
-      error
-    );
+    console.error("Proxy Error:", error);
 
     return NextResponse.next();
   }

@@ -25,7 +25,7 @@ const ConsultationDetailsPage = () => {
         const fetchConsultation = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/consultations/${id}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/consultations/${id}`
                 );
 
                 setConsultation(res.data);
@@ -44,7 +44,7 @@ const ConsultationDetailsPage = () => {
     const fetchConsultation = async () => {
         try {
             const res = await axios.get(
-                `http://localhost:5000/consultations/${id}`
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/consultations/${id}`
             );
 
             setConsultation(res.data);
@@ -58,7 +58,7 @@ const ConsultationDetailsPage = () => {
     const handleComplete = async () => {
         try {
             const res = await axios.patch(
-                `http://localhost:5000/consultations/complete/${id}`
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/consultations/complete/${id}`
             );
 
             if (res.data.success) {

@@ -28,7 +28,7 @@ const ConsultationDetailsPage = () => {
                 try {
                     const res =
                         await axios.get(
-                            `http://localhost:5000/consultations/${id}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/consultations/${id}`
                         );
 
                     setConsultation(

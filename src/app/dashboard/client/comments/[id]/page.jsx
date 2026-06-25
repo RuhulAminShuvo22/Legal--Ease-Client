@@ -35,7 +35,7 @@ const AddCommentPage = () => {
                 try {
                     const res =
                         await axios.get(
-                            `http://localhost:5000/consultations/${id}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/consultations/${id}`
                         );
 
 
@@ -90,13 +90,13 @@ const AddCommentPage = () => {
 
                 const res =
                     await axios.post(
-                        "http://localhost:5000/reviews",
+                        `${process.env.NEXT_PUBLIC_SERVER_URL}/reviews`,
                         reviewData
                     );
 
                 if (res.data.success) {
                     await axios.patch(
-                        `http://localhost:5000/consultations/${consultation._id}`,
+                        `${process.env.NEXT_PUBLIC_SERVER_URL}/consultations/${consultation._id}`,
                         {
                             reviewSubmitted:
                                 true,

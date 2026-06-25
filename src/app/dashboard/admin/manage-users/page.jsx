@@ -36,7 +36,7 @@ const ManageUsersPage = () => {
         try {
             const res =
                 await axios.get(
-                    "http://localhost:5000/users"
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/users`
                 );
 
             setUsers(res.data);
@@ -156,7 +156,7 @@ const ManageUsersPage = () => {
             try {
                 const res =
                     await axios.patch(
-                        `http://localhost:5000/users/role/${id}`,
+                        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/role/${id}`,
                         { role }
                     );
 
@@ -217,7 +217,7 @@ const ManageUsersPage = () => {
             try {
                 const res =
                     await axios.delete(
-                        `http://localhost:5000/users/${id}`
+                        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${id}`
                     );
 
                 if (

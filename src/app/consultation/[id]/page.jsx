@@ -26,7 +26,7 @@ const ConsultationPage = () => {
                 try {
                     const res =
                         await axios.get(
-                            `http://localhost:5000/hirings/${id}`
+                            `${process.env.NEXT_PUBLIC_SERVER_URL}/hirings/${id}`
                         );
 
                     setHiring(res.data);
@@ -66,7 +66,7 @@ const ConsultationPage = () => {
             };
 
             const res = await axios.post(
-                "http://localhost:5000/consultations",
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/consultations`,
                 consultationData
             );
 

@@ -150,7 +150,7 @@ export default function DashboardLayout({
         }
 
         const res = await fetch(
-          `http://localhost:5000/users/${email}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${email}`
         );
 
         if (!res.ok) {

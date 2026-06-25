@@ -48,7 +48,7 @@
 //           session.data.user;
 
 //         const res = await fetch(
-//           `http://localhost:5000/users/${currentUser.email}`
+//           `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${currentUser.email}`
 //         );
 
 //         const dbUser =
@@ -480,7 +480,7 @@ export default function Navbar() {
           session.data.user;
 
         const res = await fetch(
-          `http://localhost:5000/users/${currentUser.email}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${currentUser.email}`
         );
 
         const dbUser =

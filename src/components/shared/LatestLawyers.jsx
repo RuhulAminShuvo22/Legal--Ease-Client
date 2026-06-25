@@ -11,7 +11,7 @@ export default function LatestLawyers() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/lawyers")
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/lawyers`)
       .then((res) => res.json())
       .then((data) => {
         setLawyers(data.slice(0, 6));
