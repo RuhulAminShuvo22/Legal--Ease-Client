@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "HireLoop",
-  description: "Connecting Talent. Creating Opportunities.",
+  title: "Legal-Ease",
+  description: "Connecting Talent. Solving Problems.",
 };
 
 export default function RootLayout({ children }) {
